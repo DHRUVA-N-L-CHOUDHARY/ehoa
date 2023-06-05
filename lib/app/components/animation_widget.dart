@@ -30,7 +30,7 @@ class _AnimationWidgetState extends State<AnimationWidget> {
     "Feeling tired, unmotivated\n and low",
     "Feeling stable and ready \nto move ",
     "Feeling energised and \nmotivated",
-    "Feeling Very energised productive\n and upbeat",
+    "Feeling Very energised\n productive and upbeat",
   ];
   List<List<Color>> volumecolor = [
     [
@@ -74,46 +74,48 @@ class _AnimationWidgetState extends State<AnimationWidget> {
   String energydescri = "";
   List<Color> _volumecolor = [];
   Color _linescolor = Colors.transparent;
-
+Color _animcolor = Color.fromARGB(255, 65, 0, 130);
   void onVolumeChanged(double value) {
     if (value > 0 && value <= 60) {
       value = 60;
-      needleColor = volumecolor[0][0];
+      needleColor = volumecolor[0][2];
       _volumecolor = volumecolor[0];
       energy = energylist[0];
       energydescri = energydescrilist[0];
        _linescolor = Colors.transparent;
+       _animcolor = Colors.transparent;
     } else if (value > 60 && value <= 120) {
       value = 120;
-      needleColor = volumecolor[1][0];
+      needleColor = volumecolor[1][2];
       _volumecolor = volumecolor[1];
       energy = energylist[1];
       energydescri = energydescrilist[1];
       _linescolor = Colors.white;
-      
+       _animcolor = Colors.transparent;
     } else if (value > 120 && value <= 180) {
       value = 180;
-      needleColor = volumecolor[2][0];
+      needleColor = volumecolor[2][2];
       _volumecolor = volumecolor[2];
       energy = energylist[2];
       energydescri = energydescrilist[2];
       _linescolor = Colors.white;
-
+       _animcolor = Colors.transparent;
     } else if (value > 180 && value <= 270) {
       value = 270;
-      needleColor = volumecolor[3][0];
+      needleColor = volumecolor[3][2];
       _volumecolor = volumecolor[3];
       energy = energylist[3];
       energydescri = energydescrilist[3];
       _linescolor = Colors.white;
+       _animcolor = Colors.transparent;
     } else {
       value = 360;
-      needleColor = volumecolor[4][0];
+      needleColor = volumecolor[4][2];
       _volumecolor = volumecolor[4];
       energy = energylist[4];
       energydescri = energydescrilist[4];
       _linescolor = Colors.white;
-
+       _animcolor = Colors.transparent;
     }
 
     setState(() {
@@ -132,8 +134,9 @@ class _AnimationWidgetState extends State<AnimationWidget> {
           child: Center(child: headingText(energy, fontSize: 28)),
         ),
         Positioned(
-          top: MediaQuery.of(AppService.getContext()).size.height * 0.2,
-          child: Container(
+          top: MediaQuery.of(AppService.getContext()).size.height * 0.15,
+          child: AnimatedContainer(
+            duration: Duration(seconds: 1),
             width: 520.h,
             height: 520.h,
             child: Stack(
@@ -153,10 +156,19 @@ class _AnimationWidgetState extends State<AnimationWidget> {
                     opacity: 0.2,
                     child: Image.asset(
                       AppImages.linesanim,
+                      // AppImages.animinit,
                       color: _linescolor ,
                       width: 520.h,
                       height: 520.h,
                     ),
+                  ),
+                ),
+                ClipOval(
+                  child: Image.asset(
+                    AppImages.animinit,
+                    color: _animcolor,
+                    height: 480.h,
+                    width: 480.h,
                   ),
                 ),
                 ClipOval(
@@ -169,7 +181,8 @@ class _AnimationWidgetState extends State<AnimationWidget> {
                   ),
                 ),
                 ClipOval(
-                  child: Container(
+                  child: AnimatedContainer(
+            duration: Duration(seconds: 1),
                     height: 100.h,
                     width: 100.h,
                     // decoration: ,
@@ -282,7 +295,8 @@ class _AnimationWidgetState extends State<AnimationWidget> {
         Positioned(
           top: MediaQuery.of(AppService.getContext()).size.height * 0.8,
           //  left: MediaQuery.of(AppService.getContext()).size.width*0.25,
-          child: Container(
+          child: AnimatedContainer(
+            duration: Duration(seconds: 1),
               width: 300.w,
               child: Center(
                   child: discriptionText(energydescri,

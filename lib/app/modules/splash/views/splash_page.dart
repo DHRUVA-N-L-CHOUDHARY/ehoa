@@ -1,24 +1,105 @@
+import 'dart:convert';
+
 import 'package:ehoa/app/components/app_icon_btn.dart';
 import 'package:ehoa/app/components/app_outlined_btn.dart';
 import 'package:ehoa/app/components/common/app_utils.dart';
-import 'package:ehoa/app/modules/create_account/views/create_account_view.dart';
+import 'package:ehoa/app/data/remote/api_service.dart';
 import 'package:ehoa/app/modules/splash/controllers/splash_controller.dart';
 import 'package:ehoa/app/modules/tnc/views/tnc_view.dart';
 import 'package:ehoa/app/routes/app_pages.dart';
 import 'package:ehoa/config/theme/my_styles.dart';
+import 'package:ehoa/main.dart';
 import 'package:ehoa/utils/constants.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:lottie/lottie.dart';
 import 'package:spring/spring.dart';
+import 'package:http/http.dart' as http;
 
 import '../../../../config/translations/strings_enum.dart';
 import '../../../components/sizedbox_util.dart';
 
-class Splash extends StatelessWidget {
+class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
+
+  @override
+  State<Splash> createState() => _SplashState();
+}
+
+class _SplashState extends State<Splash> {
+  late String token;
+  getToken() async {
+    token = await FirebaseMessaging.instance.getToken() ?? "";
+    print(
+        "-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=->$token");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    var initializationSettingsAndroid =
+        const AndroidInitializationSettings('ic_launcher');
+    var initialzationSettingsAndroid =
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationSettings =
+        InitializationSettings(android: initialzationSettingsAndroid);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        final http.Response response =
+            await http.get(Uri.parse(android.imageUrl ?? ""));
+        BigPictureStyleInformation bigPictureStyleInformation =
+            BigPictureStyleInformation(ByteArrayAndroidBitmap.fromBase64String(
+                base64Encode(response.bodyBytes)));
+
+        flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                  channel.id, channel.name, channel.description,
+                  color: Colors.blue,
+                  icon: "@mipmap/ic_launcher",
+                  importance: Importance.high,
+                  priority: Priority.high,
+                  styleInformation: bigPictureStyleInformation),
+            ),
+            payload: android.imageUrl);
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        showDialog(
+            // context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: Text(notification.title ?? ""),
+                content: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [Text(notification.body ?? "")],
+                  ),
+                ),
+              );
+            },
+            context: context);
+      }
+    });
+
+    getToken();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +185,15 @@ class Splash extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  c.socialLogin();
+                  c.signInWithApple().then((value) {
+                        Map<String, dynamic> data = {
+                          "email": value.user?.email,
+                          "password": value.user?.uid.replaceRange(8, value.user?.uid.length, ''),
+                        };
+                        ApiService()
+                            .createUserAccount(data)
+                            .then((value1) => Get.offNamed(AppPages.TNC));
+                      });
                 },
                 label: Padding(
                     padding: const EdgeInsets.all(13.0),
@@ -128,7 +217,15 @@ class Splash extends StatelessWidget {
                       color: Colors.red,
                     ),
                     onTap: () {
-                      c.socialLogin();
+                      c.signInWithGoogle().then((value) {
+                        Map<String, dynamic> data = {
+                          "email": value.user?.email,
+                          "password": value.user?.uid.replaceRange(8, value.user?.uid.length, '')
+                        };
+                        ApiService()
+                            .createUserAccount(data)
+                            .then((value1) => Get.offNamed(AppPages.TNC));
+                      });
                     },
                     padding: const EdgeInsets.all(13.0),
                   ),
@@ -140,7 +237,15 @@ class Splash extends StatelessWidget {
                   child: AppIconButton(
                     icon: const Icon(Icons.facebook),
                     onTap: () {
-                      c.socialLogin();
+                      c.facebooklogin().then((value) {
+                        Map<String, dynamic> data = {
+                          "email": value.user?.email,
+                          "password": value.user?.uid.replaceRange(8, value.user?.uid.length, '')
+                        };
+                        ApiService()
+                            .createUserAccount(data)
+                            .then((value1) => Get.offNamed(AppPages.TNC));
+                      });
                     },
                     padding: const EdgeInsets.all(13.0),
                   ),

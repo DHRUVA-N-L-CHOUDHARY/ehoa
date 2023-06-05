@@ -76,7 +76,13 @@ class AppImages {
   static String get moonPhBkg => 'assets/images/moon_ph_bkg.png';
   static String get rectg => 'assets/images/Rectangle.png';
   static String get linesanim => 'assets/images/lines_anim.png';
-
+  static String get animinit => 'assets/images/Group 239.png';
+  static String get animlow => 'assets/images/anim_low.png';
+  static String get animverylow => 'assets/images/anim_very_low.png';
+  static String get animmedi => 'assets/images/anim_medim.png';
+  static String get animhigh => 'assets/images/anim_high.png';
+  static String get animveryhigh => 'assets/images/anim_veryhigh.png';
+  static String get expanm => 'assets/images/expanded_anim.png';
 }
 
 class AppIcons {
@@ -167,7 +173,17 @@ class Moons {
   static const moon28 = "assets/vectors/moons/Moon-28.svg";
   static const moon29 = "assets/vectors/moons/Moon-29.svg";
   static const moon30 = "assets/vectors/moons/Moon-30.svg";
-  
+  static const nomoon = "assets/images/Moon low.png";
+  static const verylowmoon = "assets/images/Moon Very Low Energy.png";
+  static const lowmoon = "assets/images/Moon Low Energy.png";
+  static const balmoon = "assets/images/Moon Balanced.png";
+  static const highmoon = "assets/images/Moon High Energy.png";
+  static const veryhighmoon = "assets/images/Moon Very High Energy.png";
+  static const zoomverylow = "assets/images/zoom_very_low.png";
+  static const zoomlow = "assets/images/zoom_low.png";
+  static const zoombal = "assets/images/zoom_bal.png";
+  static const zoomhigh = "assets/images/zoom_high.png";
+  static const zoomveryhigh = "assets/images/zoom_very_high.png";
 }
 
 class Gifs {

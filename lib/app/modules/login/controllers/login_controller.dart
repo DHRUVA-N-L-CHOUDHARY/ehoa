@@ -34,6 +34,7 @@ class LoginController extends GetxController {
         'email': emailController.text,
         'password': passwordController.text
       };
+      print(data);
       Map res = await ApiService().loginUser(data);
       if (res.isNotEmpty) {
         MySharedPref.setToken(res['token']);

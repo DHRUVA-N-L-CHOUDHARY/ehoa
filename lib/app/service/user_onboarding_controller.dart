@@ -67,7 +67,15 @@ class UserOnboardingController extends GetxController {
       'country_id':user?.country_id,
       'group_id':user?.group_id,
       'dob':user?.dob,
-
+      'gender': user?.gender,
+      'pronoun_id':user?.pronoun_id,
+      'custom_gender':user?.custom_gender,
+      'custom_pronoun':user?.custom_pronoun,
+      'focus_id':user?.focus_id,
+      'average_cycle_length':user?.average_cycle_length,
+      'average_cycle_days':user?.average_cycle_days,
+      'language_id':user?.language_id,
+      'user_notification_status':user?.user_notification_status
     };
     Map<String, dynamic> res = await ApiService().updateProfile(data);
     isLoading(false);

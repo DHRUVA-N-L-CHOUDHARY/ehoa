@@ -4,6 +4,7 @@ class Endpoints {
   static const HELP = "23";
   static const createUser = "create-user";
   static const userTermsAndCondition = "user-term-conditions";
+  static const newsocialuserlogin = "new";
   static const saveCountries = "save-countries";
   static const saveName = "save-name";
   static const saveDob = "save-dob";
