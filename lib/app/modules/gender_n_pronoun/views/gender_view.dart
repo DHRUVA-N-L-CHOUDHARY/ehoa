@@ -74,7 +74,6 @@ class GenderView extends StatelessWidget {
                         btnText: Strings.next.tr,
                         ontap: () {
                         Get.back();
-
                         }),
                   ],
                 )),

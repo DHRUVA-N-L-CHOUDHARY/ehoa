@@ -35,7 +35,13 @@ import 'package:ehoa/app/modules/paywall/bindings/paywall_binding.dart';
 import 'package:ehoa/app/modules/paywall/views/paywall_view.dart';
 import 'package:ehoa/app/modules/play_podcast/bindings/play_podcast_binding.dart';
 import 'package:ehoa/app/modules/play_podcast/views/play_podcast_view.dart';
+import 'package:ehoa/app/modules/post_animation/binding/post_animation_binding.dart';
+import 'package:ehoa/app/modules/post_animation/view/post_animation_view.dart';
 import 'package:ehoa/app/modules/privacy_setting/views/privacy_setting_view.dart';
+import 'package:ehoa/app/modules/remainders/bindings/remainders_binding.dart';
+import 'package:ehoa/app/modules/remainders/views/remainders_view.dart';
+import 'package:ehoa/app/modules/remainders_set/binding/remainders_set_binding.dart';
+import 'package:ehoa/app/modules/remainders_set/views/remainders_set_view.dart';
 import 'package:ehoa/app/modules/reporting_system/bindings/reporting_system_bindings.dart';
 import 'package:ehoa/app/modules/reporting_system/views/reporting_system_view.dart';
 import 'package:ehoa/app/modules/settings/bindings/settings_binding.dart';
@@ -45,8 +51,9 @@ import 'package:ehoa/app/modules/single_cms_page/views/page_content_view.dart';
 import 'package:ehoa/app/modules/splash/bindings/splash_binding.dart';
 import 'package:ehoa/app/modules/splash/views/splash_page.dart';
 import 'package:ehoa/app/modules/sync_g_cal/views/sync_g_cal_view.dart';
+import 'package:ehoa/app/modules/zoom_animation/bindings/zoom_animation_binding.dart';
+import 'package:ehoa/app/modules/zoom_animation/views/zoom_animation_screen.dart';
 import 'package:get/get.dart';
-
 import '../components/navbar/bottom_navbar.dart';
 import '../components/navbar/navbar_binding.dart';
 import '../modules/about_us/views/about_content_view.dart';
@@ -154,6 +161,8 @@ class AppPages {
   static const DISC_CODE_SUCCESS = Routes.DISC_CODE_SUCCESS;
   static const BASE = Routes.BASE;
   static const HOME_ANIMATION = Routes.HOME_ANIMATION;
+  static const ZOOM_ANIMATION = Routes.ZOOM_ANIMATION;
+  static const POST_ANIMATION = Routes.POST_ANIMATION;
   static const EMPOWER = Routes.EMPOWER;
   static const CALENDAR = Routes.CALENDAR;
   static const SYMPTOMS = Routes.SYMPTOMS;
@@ -175,6 +184,8 @@ class AppPages {
   static const PRIVACY_SETTINGS = Routes.PRIVACY_SETTINGS;
   static const CYCLE_SYNC_WITH_G_CAL = Routes.CYCLE_SYNC_WITH_G_CAL;
   static const REPORTING_SYSTEM = Routes.REPORTING_SYSTEM;
+  static const REMAINDERS = Routes.REMAINDERS;
+  static const REMAINDERS_SET = Routes.REMAINDERS_SET;
   static const RS_CYCLE_LEN = Routes.RS_CYCLE_LEN;
   static const MONTHLY_MOOD = Routes.MONTHLY_MOOD;
   static const ENERGY_GRAPH = Routes.ENERGY_GRAPH;
@@ -206,16 +217,14 @@ class AppPages {
 
     GetPage(
       name: _Paths.HOME_ANIMATION,
-      page: () => HomeAnimationView(),
+      page: () => const HomeAnimationView(),
       binding: HomeAnimationBinding(),
     ),
-
-    ///
-    // GetPage(
-    //   name: _Paths.HOME,
-    //   page: () => const HomeView(),
-    //   binding: HomeBinding(),
-    // ),
+    GetPage(
+      name: _Paths.ZOOM_ANIMATION,
+      page: () => ZoomAnimationScreen(),
+      binding: ZoomAnimationBinding(),
+    ),
     GetPage(
       name: _Paths.CREATE_ACC,
       page: () => const CreateAccountView(),
@@ -419,6 +428,14 @@ class AppPages {
       binding: SyncCycleWithGCalBinding(),
     ),
     GetPage(
+        name: _Paths.REMAINDERS,
+        page: () => const RemaindersView(),
+        binding: RemaindersBinding()),
+    GetPage(
+        name: _Paths.REMAINDERS_SET,
+        page: () => const RemaindersSetView(),
+        binding: RemaindersSetBinding()),
+    GetPage(
       name: _Paths.REPORTING_SYSTEM,
       page: () => const ReportingSystemView(),
       binding: ReportingSystemBinding(),
@@ -489,5 +506,9 @@ class AppPages {
       page: () => const CalendarListView(),
       binding: CalendarListViewBinding(),
     ),
+    GetPage(
+        name: _Paths.POST_ANIMATION,
+        page: () => const PostAnimationView(),
+        binding: PostAnimationBinding())
   ];
 }

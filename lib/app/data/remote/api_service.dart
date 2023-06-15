@@ -227,6 +227,13 @@ class ApiService extends ApiInterface {
         url: ApiInterface.baseUrl + Endpoints.showTips+tipsId);
     return _parseBaseResponse(res) ?? {};
   }
+
+  Future<Map<String,dynamic>> getTipsForDailyRitual({energyId, subEnergyId, categoryId}) async
+  {
+     http.Response res = await getApi(
+        url: ApiInterface.baseUrl + Endpoints.getips+energyId+"/"+subEnergyId+"/"+categoryId);
+    return _parseBaseResponse(res) ?? {};
+  }
   Future<Map<String,dynamic>> getWisdomHeaderImages({catId}) async {
     http.Response res = await getApi(
         url: ApiInterface.baseUrl + Endpoints.showWisdomTips+catId);
@@ -279,6 +286,28 @@ class ApiService extends ApiInterface {
    Future<Map<String,dynamic>> showSymptomsBetweenDates(Map<String, dynamic> data) async {
     http.Response res = await postApi(
         url: ApiInterface.baseUrl + Endpoints.showSymptomsBetweenDates, data: data);
+    return _parseBaseResponse(res) ?? {};
+  }
+
+  Future<Map<String,dynamic>> saveEnergy(Map<String, dynamic> data) async {
+    http.Response res = await postApi(
+        url: ApiInterface.baseUrl + Endpoints.saveenergy, data: data);
+    return _parseBaseResponse(res) ?? {};
+  }
+
+  Future<Map<String,dynamic>> saveUserDetails(Map<String, dynamic> data) async {
+    http.Response res = await postApi(
+        url: ApiInterface.baseUrl + Endpoints.saveurdetails, data: data);
+    return _parseBaseResponse(res) ?? {};
+  }
+  Future<Map<String,dynamic>> newSocialUserlogin(Map<String, dynamic> data) async {
+    http.Response res = await postApi(
+        url: ApiInterface.baseUrl + Endpoints.newsocialuserlogin, data: data);
+    return _parseBaseResponse(res) ?? {};
+  }
+  Future<Map<String,dynamic>> existingSocialUserlogin(Map<String, dynamic> data) async {
+    http.Response res = await postApi(
+        url: ApiInterface.baseUrl + Endpoints.existingsocialuserlogin, data: data);
     return _parseBaseResponse(res) ?? {};
   }
 }

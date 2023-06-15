@@ -56,21 +56,23 @@ class GenderNPronounController extends GetxController {
       data['gender'] = selectedGender?.itemName;
       data['custom_gender'] = selectedGender?.itemName;
     } else {
+      data["gender"] = selectedGender?.itemName;
       data['custom_gender'] = selectedGender?.itemName;
     }
     if (selectedPronoun?.itemId != null) {
-      data['pronoun_id'] = selectedPronoun?.itemId;
+      data['pronoun_id'] = selectedPronoun?.itemId.toString();
       data['custom_pronoun'] = selectedPronoun?.itemName;
     } else {
+      data['pronoun_id'] = selectedPronoun?.itemId.toString();
       data['custom_pronoun'] = selectedPronoun?.itemName;
     }
-    userOnboardingController.updategenderpronoun(data['gender'], data['custom_gender'],data['pronoun_id'],data['custom_pronoun']);
-    Map<String, dynamic> res = await ApiService().updateProfile(data);
+    userOnboardingController.updategenderpronoun(data['gender'],data['pronoun_id'], data['custom_gender'],data['custom_pronoun']);
+    // Map<String, dynamic> res = await ApiService().updateProfile(data);
     isLoading(false);
     update();
 
-    if (res.containsKey("token")) {
+    // if (res.containsKey("token")) {
       Get.toNamed(AppPages.PURPOSE);
-    }
+    // }
   }
 }

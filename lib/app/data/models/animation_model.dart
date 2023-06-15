@@ -1,8 +1,9 @@
 
 class AnimationModel {
-  String? assetcurt;
-  String? energy;
-  String? energydescri;
+  List<String> assetcurt;
+  String energy;
+  String energydescri;
+  bool issucess;
 
-  AnimationModel({this.assetcurt, this.energy, this.energydescri});
+  AnimationModel({ required this.assetcurt, required this.energy ,required this.energydescri, this.issucess = false});
 }

@@ -1,4 +1,5 @@
 import 'package:ehoa/app/components/app_bar.dart';
+import 'package:ehoa/app/components/app_outlined_btn.dart';
 import 'package:ehoa/app/components/headings.dart';
 import 'package:ehoa/app/components/my_icon_button.dart';
 import 'package:ehoa/app/components/navbar/bottom_navbar.dart';
@@ -7,6 +8,7 @@ import 'package:ehoa/app/routes/app_pages.dart';
 import 'package:ehoa/app/routes/app_service.dart';
 import 'package:ehoa/config/theme/light_theme_colors.dart';
 import 'package:ehoa/config/theme/my_styles.dart';
+import 'package:ehoa/utils/asset_list.dart';
 import 'package:ehoa/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,9 +16,7 @@ import 'package:flutter_super_html_viewer/utils/shims/dart_ui_real.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:radar_chart/radar_chart.dart';
-
 import 'package:get/get.dart';
-
 import '../../../../config/translations/strings_enum.dart';
 import '../../../components/common/app_utils.dart';
 import '../controllers/calendar_controller.dart';
@@ -51,7 +51,11 @@ class CalendarView extends StatelessWidget {
                       width: double.infinity,
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage(AppImages.kGpBkg),
+                              image: AssetImage(
+                                  c.zoomAnimationController.animationModel ==
+                                          null
+                                      ? AppImages.kGpBkg
+                                      : AppImages.kanimBkg),
                               fit: BoxFit.fill)),
                       child: Stack(
                         alignment: Alignment.center,
@@ -65,17 +69,44 @@ class CalendarView extends StatelessWidget {
                             child:
                                 Center(child: headingText(Strings.cycleName)),
                           ),
+                          if (c.zoomAnimationController.animationModel != null)
+                            Positioned(
+                                top: MediaQuery.of(AppService.getContext())
+                                        .size
+                                        .height *
+                                    0.38,
+                                child: Image.asset(
+                                  AppImages.bkgellipse,
+                                  width: 380.w,
+                                )),
+                          if (c.zoomAnimationController.animationModel != null)
+                            Positioned(
+                                top: MediaQuery.of(AppService.getContext())
+                                        .size
+                                        .height *
+                                    0.39,
+                                child: Image.asset(
+                                  AppImages.bkgmoons,
+                                  width: 380.w,
+                                )),
                           Positioned(
                               top: MediaQuery.of(AppService.getContext())
                                       .size
                                       .height *
-                                  0.2,
+                                  0.19,
                               child: GestureDetector(
                                   onTap: () {
                                     Get.offNamed(AppPages.HOME_ANIMATION);
                                   },
                                   child: Image.asset(
-                                      AppIcons.smapleEnergyGraphic))),
+                                    c.zoomAnimationController.animationModel !=
+                                            null
+                                        ? c.zoomAnimationController
+                                                .animationModel?.assetcurt[3] ??
+                                            ""
+                                        : AppImages.smapleEnergyGraphic ?? "",
+                                    width: 340.w,
+                                  ))),
                           Positioned(
                               top: MediaQuery.of(AppService.getContext())
                                       .size
@@ -105,12 +136,76 @@ class CalendarView extends StatelessWidget {
                                             BorderRadius.circular(50.r),
                                       ),
                                       child: Center(
-                                          child: subHeadingText(
-                                              Strings.logPeriod)),
+                                        child:
+                                            subHeadingText(Strings.logPeriod),
+                                      ),
                                     ),
                                   ),
                                 ],
-                              ))
+                              )),
+                          // c.issucess
+                          //     ? Image.asset(AppImages.bkggdjflw)
+                          //     : Container(),
+                          // c.issucess == true
+                          //     ? Container(
+                          //         margin:
+                          //             // MyPadding.getFixedHorizontalAndDynamicVerticalInsets(),
+                          //             EdgeInsets.only(
+                          //           left: 24.w,
+                          //           right: 24.w,
+                          //           top: (MediaQuery.of(context).size.height /
+                          //                   5.5)
+                          //               .h,
+                          //         ),
+                          //         padding: EdgeInsets.symmetric(
+                          //             horizontal: 16.w, vertical: 40.h),
+                          //         decoration: BoxDecoration(
+                          //           color: LightThemeColors.glassBkgColor,
+                          //           border: Border.all(
+                          //               color:
+                          //                   LightThemeColors.glassStrokColor),
+                          //           borderRadius: BorderRadius.circular(32.r),
+                          //         ),
+                          //         child: Center(
+                          //           child: Column(
+                          //             children: [
+                          //               sizedBox(height: 30.h),
+                          //               Stack(
+                          //                 children: [
+                          //                   Image.asset(
+                          //                     AppIcons.andesgn,
+                          //                     height: 230.h,
+                          //                   ),
+                          //                   Positioned(
+                          //                       top: 30.h,
+                          //                       left: 30.h,
+                          //                       child: Image.asset(
+                          //                           AppImages.kKoru)),
+                          //                 ],
+                          //               ),
+                          //               sizedBox(height: 40.h),
+                          //               headingText(Strings.miharo),
+                          //               sizedBox(height: 6),
+                          //               subHeadingText(Strings.oflog),
+                          //               sizedBox(height: 48),
+                          //               AppOutlineButton(
+                          //                 btnText: Strings.paitomahi,
+                          //                 ontap: () async {
+                          //                   showModalBottomSheet(
+                          //                       context: context,
+                          //                       builder: (context) {
+                          //                         return showbottommodal(
+                          //                             context);
+                          //                       });
+                          //                   // c.baseVM.changePage(
+                          //                   //     BottomBarSelection.tips);
+                          //                 },
+                          //               )
+                          //             ],
+                          //           ),
+                          //         ),
+                          //       )
+                          //     : Container(),
                         ],
                       )),
                   sizedBox(height: 35),
@@ -140,6 +235,7 @@ class CalendarView extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(100.r),
                                         onTap: () {
+                                          //? sdjkfsdlk
                                           c.baseVM.changePage(
                                               BottomBarSelection.symptoms);
                                           c.baseVM.update();
@@ -218,10 +314,10 @@ class CalendarView extends StatelessWidget {
                         Center(child: subHeadingText(Strings.symptomsOfDay)),
                         sizedBox(height: 90.h),
                         subHeadingText(
-                            "${Strings.currCycle}: ${DateTime.now().day} day",
+                            "${Strings.currCycle}: ${c.curdif} days",
                             fontSize: 18),
                         Text(
-                          "${c.getFormattedDay()[0]} - ${c.getFormattedDay()[1]}",
+                          "${c.currentmonthstart} - ${c.currentmonthend}",
                           style: MyStyles.getTextStyle(
                             fontSize: 8,
                           ),
@@ -275,9 +371,9 @@ class CalendarView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              subHeadingText("28 days", fontSize: 18),
+                              subHeadingText("${c.prevdif} days", fontSize: 18),
                               Text(
-                                "May 19 - June 17",
+                                "${c.previosmonthstart} - ${c.previosmontend}",
                                 style: MyStyles.getTextStyle(
                                   fontSize: 8,
                                 ),
@@ -333,9 +429,9 @@ class CalendarView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              subHeadingText("30 days", fontSize: 18),
+                              subHeadingText("${c.pprevdif} days", fontSize: 18),
                               Text(
-                                "April 19 - May 17",
+                                "${c.ppmonthstart} - ${c.ppmonthend}",
                                 style: MyStyles.getTextStyle(
                                   fontSize: 8,
                                 ),
@@ -376,7 +472,58 @@ class CalendarView extends StatelessWidget {
                                 fontSize: 16)),
                         sizedBox(height: 48),
                         !c.showGraph
-                            ? Container()
+                            ? Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.white10,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10)),
+                                    border: Border.all(color: Colors.white12)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20.0).h,
+                                  child: Column(
+                                    children: [
+                                      headingText(Strings.emotiontrends,
+                                          fontSize: 28.sp),
+                                      sizedBox(height: 20.h),
+                                      Center(
+                                          child:
+                                              Image.asset(AppImages.hexgraph)),
+                                      sizedBox(height: 20.h),
+                                      Container(
+                                          width: 200.w,
+                                          child: subHeadingText(
+                                              Strings.trackcyclemoods,
+                                              textAlign: TextAlign.center,
+                                              fontSize: 16.sp)),
+                                      sizedBox(height: 20.h),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Get.toNamed(AppPages.PAYWALL);
+                                        },
+                                        child: Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.60,
+                                          decoration: BoxDecoration(
+                                              color: const Color.fromRGBO(
+                                                  246, 78, 65, 1.0),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(20.w))),
+                                          child: Padding(
+                                            padding:
+                                                const EdgeInsets.all(12.0).w,
+                                            child: Center(
+                                                child: subHeadingText(
+                                                    "Unlock Premium",
+                                                    fontSize: 15.sp)),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
                             : Center(
                                 child: RadarChart(
                                   length: 6,
@@ -385,7 +532,7 @@ class CalendarView extends StatelessWidget {
                                   //backgroundColor: Colors.white,
                                   vertices: [
                                     PreferredSize(
-                                      preferredSize: Size(50, 50),
+                                      preferredSize: const Size(50, 50),
                                       child: Padding(
                                         padding: const EdgeInsets.only(
                                             top: 30.0, left: 10),
@@ -398,7 +545,7 @@ class CalendarView extends StatelessWidget {
                                       ),
                                     ),
                                     PreferredSize(
-                                      preferredSize: Size(50, 50),
+                                      preferredSize: const Size(50, 50),
                                       child: Padding(
                                         padding: const EdgeInsets.only(top: 30),
                                         child: Text(c.emotionLabels[1],
@@ -408,14 +555,14 @@ class CalendarView extends StatelessWidget {
                                       ),
                                     ),
                                     PreferredSize(
-                                      preferredSize: Size(80, 50),
+                                      preferredSize: const Size(80, 50),
                                       child: Text(c.emotionLabels[2],
                                           style: MyStyles.getTextStyle(
                                               color: LightThemeColors.white90,
                                               fontSize: 14)),
                                     ),
                                     PreferredSize(
-                                      preferredSize: Size(50, 50),
+                                      preferredSize: const Size(50, 50),
                                       child: Padding(
                                         padding:
                                             const EdgeInsets.only(bottom: 8.0),
@@ -426,7 +573,7 @@ class CalendarView extends StatelessWidget {
                                       ),
                                     ),
                                     PreferredSize(
-                                      preferredSize: Size(50, 50),
+                                      preferredSize: const Size(50, 50),
                                       child: Padding(
                                         padding: const EdgeInsets.only(
                                             left: 14.0, bottom: 20),
@@ -437,7 +584,7 @@ class CalendarView extends StatelessWidget {
                                       ),
                                     ),
                                     PreferredSize(
-                                      preferredSize: Size(50, 50),
+                                      preferredSize: const Size(50, 50),
                                       child: Padding(
                                         padding: const EdgeInsets.only(
                                             top: 30, left: 10),
@@ -578,6 +725,87 @@ class CalendarView extends StatelessWidget {
       return const BorderRadius.only(
           topRight: Radius.circular(100), bottomRight: Radius.circular(100));
     }
+  }
+
+  Widget showbottommodal(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.50,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(25.w),
+          topRight: Radius.circular(25.w),
+        ),
+      ),
+      child: Stack(
+        children: [
+          Positioned.fill(
+              top: 100.h,
+              child: Image.asset(
+                AppImages.dra,
+                fit: BoxFit.fitWidth,
+                width: MediaQuery.of(context).size.width,
+              )),
+          Positioned(
+            child: Container(
+              decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color.fromRGBO(255, 255, 255, 1.0),
+                      Color.fromRGBO(255, 255, 255, 0.9),
+                      Color.fromRGBO(255, 255, 255, 0.7),
+                      Color.fromRGBO(255, 255, 255, 0.6),
+                      Color.fromRGBO(255, 255, 255, 0.5),
+                      Color.fromRGBO(255, 255, 255, 0.4),
+                      Color.fromRGBO(255, 255, 255, 0.3),
+                      Color.fromRGBO(255, 255, 255, 0.2),
+                      Color.fromRGBO(255, 255, 255, 0.1)
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25.h),
+                      topRight: Radius.circular(25.h))),
+              child: Column(
+                children: [
+                  headingText(Strings.tipofday, color: Colors.black),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0).h,
+                    child: subHeadingText(Strings.tipofdaydescri,
+                        color: Colors.black,
+                        textAlign: TextAlign.center,
+                        fontSize: 18.sp),
+                  ),
+                  sizedBox(
+                    height: MediaQuery.of(context).size.height * 0.23,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed(AppPages.ENERGY_TIPS_DETAILS);
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.w))),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0).w,
+                        child: Center(
+                            child: subHeadingText("learn more",
+                                color: Colors.black, fontSize: 24.sp)),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

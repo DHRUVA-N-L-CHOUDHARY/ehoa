@@ -52,6 +52,8 @@ abstract class Routes {
   static const DISC_CODE_SUCCESS = _Paths.DISC_CODE_SUCCESS;
   static const BASE = _Paths.BASE;
   static const HOME_ANIMATION = _Paths.HOME_ANIMATION;
+  static const ZOOM_ANIMATION = _Paths.ZOOM_ANIMATION;
+  static const POST_ANIMATION = _Paths.POST_ANIMATION;
   static const EMPOWER = _Paths.EMPOWER;
   static const CALENDAR = _Paths.CALENDAR;
   static const SYMPTOMS = _Paths.SYMPTOMS;
@@ -72,6 +74,8 @@ abstract class Routes {
   static const PRIVACY_SETTINGS = _Paths.PRIVACY_SETTINGS;
   static const CYCLE_SYNC_WITH_G_CAL = _Paths.CYCLE_SYNC_WITH_G_CAL;
   static const REPORTING_SYSTEM = _Paths.REPORTING_SYSTEM;
+  static const REMAINDERS = _Paths.REMAINDERS;
+  static const REMAINDERS_SET = _Paths.REMAINDERS_SET;
   static const RS_CYCLE_LEN = _Paths.RS_CYCLE_LEN;
   static const MONTHLY_MOOD = _Paths.MONTHLY_MOOD;
   static const ENERGY_GRAPH = _Paths.ENERGY_GRAPH;
@@ -146,6 +150,7 @@ abstract class _Paths {
   static const DISC_CODE_SUCCESS = '/disc_code_success';
   static const BASE = '/base';
   static const HOME_ANIMATION = '/home_animation';
+  static const POST_ANIMATION = "/post_animation";
   static const EMPOWER = '/empower';
   static const CALENDAR = '/calendar';
   static const SYMPTOMS = '/symptoms';
@@ -162,6 +167,8 @@ abstract class _Paths {
   static const EDIT_EMAIL_END = '/edit_email_end';
   static const EDIT_PRONOUN = '/edit_pronoun';
   static const REPORTING_SYSTEM = '/reporting_system';
+  static const REMAINDERS = "/remainders";
+  static const REMAINDERS_SET = "/remainders_set";
   static const RS_CYCLE_LEN = '/rs_cycle_len';
   static const MONTHLY_MOOD = '/monthly_mood';
   static const ENERGY_GRAPH = '/energy_graph';
@@ -173,4 +180,5 @@ abstract class _Paths {
   static const CYCLE_DETAILS = '/cycle_details';
   static const MOON_PHASES = '/moon_phases';
   static const MOON_PHASES_DETAILS = '/moon_phases_details';
+  static const ZOOM_ANIMATION = '/zoom_animation';
 }

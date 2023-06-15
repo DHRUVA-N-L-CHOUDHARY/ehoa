@@ -4,14 +4,11 @@ import 'package:ehoa/app/components/common/app_utils.dart';
 import 'package:ehoa/app/components/headings.dart';
 import 'package:ehoa/app/components/sizedbox_util.dart';
 import 'package:ehoa/app/data/remote/api_interface.dart';
-import 'package:ehoa/app/modules/calendar/controllers/calendar_controller.dart';
 import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
 import '../../../../config/theme/light_theme_colors.dart';
 import '../../../../config/theme/my_styles.dart';
 import '../../../../config/translations/strings_enum.dart';
@@ -62,7 +59,6 @@ class SymptomsView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       sizedBox(height: 38),
-
                       //Mentrual Flow
                       headingText(Strings.menstruralFlow),
                       sizedBox(height: 16),

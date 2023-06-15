@@ -1,5 +1,4 @@
 import 'package:ehoa/app/modules/empower/controllers/empower_controller.dart';
-import 'package:ehoa/app/modules/view_pager/views/view_pager_view.dart';
 import 'package:ehoa/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,10 +14,11 @@ class ViewPagerController extends GetxController with BaseController {
   int selectedPage = 0;
   bool? showMoon = false;
 
+
   @override
   void onReady() async {
     super.onReady();
-    //getPageList();
+    getPageList();
     
   }
 

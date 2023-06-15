@@ -42,13 +42,13 @@ class LangController extends GetxController {
       'language_id':selected?.itemId??""
     };
 userOnboardingController.updatelang(data['language_id']);
-    Map<String, dynamic> res = await ApiService().updateProfile(data);
+    // Map<String, dynamic> res = await ApiService().updateProfile(data);
     isLoading(false);
     update();
 
-    if (res.containsKey("token")) {
+    // if (res.containsKey("token")) {
       Get.toNamed(AppPages.NOTIFICATON);
 
-    }
+    // }
   }
 }

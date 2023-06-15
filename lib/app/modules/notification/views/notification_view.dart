@@ -1,8 +1,12 @@
+// ignore_for_file: argument_type_not_assignable_to_error_handler
+
 import 'package:ehoa/app/components/app_outlined_btn.dart';
+import 'package:ehoa/app/components/common/app_utils.dart';
 import 'package:ehoa/app/components/headings.dart';
 import 'package:ehoa/app/components/sizedbox_util.dart';
 import 'package:ehoa/app/modules/notification/controllers/notification_controller.dart';
 import 'package:ehoa/app/routes/app_pages.dart';
+import 'package:ehoa/app/service/helper/dialog_helper.dart';
 import 'package:ehoa/config/theme/my_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,36 +31,39 @@ class NotificationView extends StatelessWidget {
           ),
           child: Scaffold(
             backgroundColor: Colors.transparent,
-            body: ListView(
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      sizedBox(
-                        height: 30,
-                      ),
-                      backIcon(onTap: () {
-                        Get.back();
-                      }),
-                      sizedBox(
-                          height:
-                              (MediaQuery.of(context).size.height / 2.75).h),
-                      c.isAnimationCompleted
-                          ? animatedUI()
-                          : SlideUpAnimation(
-                              child: animatedUI(),
-                              animStatus: (status) {
-                                if (status == AnimStatus.completed) {
-                                  c.isAnimationCompleted = true;
-                                }
-                              },
-                            )
-                    ],
-                  ),
-                )
-              ],
+            body: baseBody(
+              c.userOnboardingController.isLoading.value,
+              ListView(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 24.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        sizedBox(
+                          height: 30,
+                        ),
+                        backIcon(onTap: () {
+                          Get.back();
+                        }),
+                        sizedBox(
+                            height:
+                                (MediaQuery.of(context).size.height / 2.75).h),
+                        c.isAnimationCompleted
+                            ? animatedUI()
+                            : SlideUpAnimation(
+                                child: animatedUI(),
+                                animStatus: (status) {
+                                  if (status == AnimStatus.completed) {
+                                    c.isAnimationCompleted = true;
+                                  }
+                                },
+                              )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
             bottomNavigationBar: Padding(
               padding: MyPadding.getDynamicBottomPaddingWithFixedHorizontal(
@@ -66,14 +73,19 @@ class NotificationView extends StatelessWidget {
                   //           child:
                   AppOutlineButton(
                       btnText: Strings.next.tr,
-                      ontap: () async{
+                      ontap: () async {
                         c.userOnboardingController
                             .updateusernotificationsts("1");
-                        await    c.userOnboardingController.registeraccount();
-                        Get.toNamed(AppPages.BASE);
-                      }
-                      //     ),
-                      ),
+                        await c.userOnboardingController
+                            .registeraccount()
+                            .then((value) {
+                              debugPrint("Sucessful");
+                            })
+                            .catchError(() {
+                          DialogHelper.showErrorDialog(
+                              "Required", "Invalid fields Entered");
+                        });
+                      }),
             ),
           ));
     });

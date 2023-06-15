@@ -28,6 +28,7 @@ class MySharedPref {
   static const String _periodLen = "periodLen";
   static const String _periodDay = "periodDay";
   static const String _cycleLen = "cycleLen";
+  static const String _ispro = "is_pro"; 
 
   /// init get storage services
   static Future<void> init() async {
@@ -111,6 +112,9 @@ class MySharedPref {
       _sharedPreferences.setInt(_cycleLen, cycleLen);
 
   static int? getCycleLen() => _sharedPreferences.getInt(_cycleLen);
+
+  static void setProtype(int ispro) => _sharedPreferences.setInt(_ispro, ispro);
+  static int? getProtype() => _sharedPreferences.getInt(_ispro);
 
   static void clearSession() {
     _sharedPreferences.clear();

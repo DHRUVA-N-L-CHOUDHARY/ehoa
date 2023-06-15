@@ -60,7 +60,6 @@ class NameView extends StatelessWidget {
                       btnText: Strings.next.tr,
                       ontap: () {
                         c.saveName();
-
                       }),
                   sizedBox(height: 35),
                   Row(

@@ -23,14 +23,14 @@ class AgeController extends GetxController {
 
     };
     userOnboardingController.updatedob(data['dob']);
-    Map<String,dynamic> res = await ApiService().saveYear(data);
+    // Map<String,dynamic> res = await ApiService().saveYear(data);
     isLoading(false);
     update();
 
-    if (res.containsKey("token")) {
+    // if (res.containsKey("token")) {
       Get.toNamed(AppPages.GENDER_N_PRONOUN);
 
-    }
+    // }
   }
 
 

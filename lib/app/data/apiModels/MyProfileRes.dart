@@ -49,6 +49,7 @@ class ShowUser {
   var languageId;
   int? averageCycleLength;
   int? averageCycleDays;
+  int? ispro;
   String? packageExpiryDate;
   String? periodDay;
   String? packageStartDate;

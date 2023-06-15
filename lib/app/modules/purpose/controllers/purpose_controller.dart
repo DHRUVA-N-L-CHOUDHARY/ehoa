@@ -29,14 +29,14 @@ class PurposeController extends GetxController {
       'focus_id':selected.itemId,
     };
     userOnboardingController.updatefocusid(data['focus_id']);
-    Map<String,dynamic> res = await ApiService().saveFocus(data);
+    // Map<String,dynamic> res = await ApiService().saveFocus(data);
     isLoading(false);
     update();
 
-    if (res.containsKey("token")) {
+    // if (res.containsKey("token")) {
       Get.toNamed(AppPages.CYCLE_LEN);
 
-    }
+    // }
   }
   @override
   void onInit() {

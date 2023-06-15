@@ -1,5 +1,9 @@
+import 'package:ehoa/app/data/local/my_shared_pref.dart';
 import 'package:ehoa/app/data/models/user_onboarding_model.dart';
 import 'package:ehoa/app/data/remote/api_service.dart';
+import 'package:ehoa/app/routes/app_pages.dart';
+import 'package:ehoa/app/service/helper/dialog_helper.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UserOnboardingController extends GetxController {
@@ -59,26 +63,44 @@ class UserOnboardingController extends GetxController {
 
   Future<void> registeraccount() async {
     isLoading(true);
+    Map<String, dynamic> res;
     Map<String, dynamic> data = {
-      'email':user?.email,
-      'password':user?.password,
-      'is_term':user?.is_term,
-      'is_understand':user?.is_understand,
-      'country_id':user?.country_id,
-      'group_id':user?.group_id,
-      'dob':user?.dob,
-      'gender': user?.gender,
-      'pronoun_id':user?.pronoun_id,
-      'custom_gender':user?.custom_gender,
-      'custom_pronoun':user?.custom_pronoun,
-      'focus_id':user?.focus_id,
-      'average_cycle_length':user?.average_cycle_length,
-      'average_cycle_days':user?.average_cycle_days,
-      'language_id':user?.language_id,
-      'user_notification_status':user?.user_notification_status
+      'user_id': MySharedPref.getUserId(),
+      'token': MySharedPref.getToken(),
+      'is_term': user?.is_term.toString(),
+      'is_understand': user?.is_understand.toString(),
+      'country_id': user?.country_id.toString(),
+      'group_id': user?.group_id.toString(),
+      'custom_group': user?.group_id.toString(),
+      'name': user?.name.toString(),
+      'dob': user?.dob.toString(),
+      'gender': user?.gender.toString(),
+      'pronoun_id': user?.pronoun_id.toString(),
+      'custom_gender': user?.custom_gender.toString(),
+      'custom_pronoun': user?.custom_pronoun.toString(),
+      'focus_id': user?.focus_id.toString(),
+      'average_cycle_length': user?.average_cycle_length.toString(),
+      'average_cycle_days': user?.average_cycle_days.toString(),
+      'language_id': user?.language_id.toString(),
+      'user_notification_status': user?.user_notification_status.toString()
     };
-    Map<String, dynamic> res = await ApiService().updateProfile(data);
-    isLoading(false);
-    update();
+    try {
+      res = await ApiService().saveUserDetails(data);
+      if (res["token"] != null) {
+        if (res.isNotEmpty) {
+          await Get.snackbar("Res", res.toString());
+           isLoading(false);
+      update();
+          Get.toNamed(AppPages.WELCOME);
+        }
+      } else {
+        DialogHelper.showErrorDialog("Error", "Invalid Credintals");
+        return;
+      }
+     
+    } catch (e) {
+      DialogHelper.showErrorDialog("Error", "Invalid Details Entered");
+      return;
+    }
   }
 }

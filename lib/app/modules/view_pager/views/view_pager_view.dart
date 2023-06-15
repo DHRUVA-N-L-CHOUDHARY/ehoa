@@ -3,16 +3,19 @@ import 'package:ehoa/app/components/headings.dart';
 import 'package:ehoa/app/components/page_indicator.dart';
 import 'package:ehoa/app/components/sizedbox_util.dart';
 import 'package:ehoa/app/routes/app_service.dart';
+import 'package:ehoa/utils/constants.dart';
 import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../config/theme/light_theme_colors.dart';
 import '../controllers/view_pager_controller.dart';
 
 class ViewPagerView extends StatelessWidget {
-  const ViewPagerView({Key? key}) : super(key: key);
+  final Function()? ontap;
+  const ViewPagerView({Key? key, this.ontap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,12 @@ class ViewPagerView extends StatelessWidget {
           backgroundColor: Colors.transparent,
           appBar: AppBar(
               backgroundColor: Colors.transparent,
-              leading: Container(),
+              leading: InkWell(
+                onTap: ontap,
+                child: Padding(
+                 padding: EdgeInsets.symmetric(horizontal: 22.w),
+                  child: Image.asset(AppImages.curvedmoonicon, color: Colors.white,),
+                )),
               actions: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 22.w),

@@ -16,10 +16,10 @@ class TncController extends GetxController {
     Map<String, String> data = {'is_term': "1", 'is_understand': "1"};
     userOnboardingController.updateisterm(
         data['is_term'] ?? "", data['is_understand'] ?? "");
-    Map res = await ApiService().saveTerms(data);
-    if (res.isNotEmpty) {
+    // Map res = await ApiService().saveTerms(data);
+    // if (res.isNotEmpty) {
       Get.toNamed(AppPages.LOCATION);
-    }
+    // }
     isLoading(false);
   }
 }

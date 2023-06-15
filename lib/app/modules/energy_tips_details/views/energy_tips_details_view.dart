@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../config/theme/light_theme_colors.dart';
-import '../../../../utils/constants.dart';
 import '../../../components/common/app_utils.dart';
-import '../../energy_tips/controllers/energy_tips_controller.dart';
 import '../../podcasts_detail/views/podcasts_detail_view.dart';
 import '../../tips/controllers/tips_controller.dart';
 import '../../wisdom/views/wisdom_view.dart';

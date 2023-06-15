@@ -1,13 +1,17 @@
+import 'dart:async';
+
 import 'package:ehoa/app/data/apiModels/MyProfileRes.dart';
 import 'package:ehoa/app/data/local/my_shared_pref.dart';
 import 'package:ehoa/app/data/remote/api_service.dart';
 import 'package:ehoa/app/modules/profile/controllers/profile_controller.dart';
+import 'package:ehoa/app/modules/zoom_animation/controllers/zoom_animation_controller.dart';
 import 'package:ehoa/config/theme/light_theme_colors.dart';
+import 'package:ehoa/utils/asset_list.dart';
 import 'package:ehoa/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:http/http.dart' as http;
 
 import '../../../data/apiModels/TipsCategoryResponse.dart';
 import '../../../service/base_controller.dart';
@@ -15,6 +19,7 @@ import '../../base/controllers/base_controller.dart';
 
 class CalendarController extends GetxController with BaseController {
   final baseVM = Get.put(BaseControlller());
+  final ZoomAnimationController zoomAnimationController = Get.find();
   int length = 3;
   List<double> values1 = [0.4, 0.8, 0.65, 0.75, 0.42, 0.83];
   List<double> values2 = [0.5, 0.3, 0.85, 0.65, 0.75, 0.42];
@@ -24,7 +29,6 @@ class CalendarController extends GetxController with BaseController {
   List<MoonData> moonList3 = List.empty(growable: true);
   List<EnergyInfo> energies = List.empty(growable: true);
   List<String> emotionLabels = List.empty(growable: true);
-  
 
   String periodStartsIn = "";
   int periodLen = -1;
@@ -35,9 +39,19 @@ class CalendarController extends GetxController with BaseController {
   int cycleLen = -1;
   bool showGraph = false;
   bool isLoading = true;
+  String currentmonthstart = "";
+  String previosmonthstart = "";
+  String ppmonthstart = "";
+  String currentmonthend = "";
+  String previosmontend = "";
+  String ppmonthend = "";
+  String curdif = "";
+  String prevdif = "";
+  String pprevdif = "";
+
   RxString selectedPeriodDate = "".obs;
   RxString periodLength = "".obs;
-
+  DateTime date = DateTime.now();
 
   @override
   void onInit() {
@@ -50,10 +64,30 @@ class CalendarController extends GetxController with BaseController {
         await ApiService().showProfile(id: MySharedPref.getUserId());
     if (res.isNotEmpty) {
       MyProfileResponse obj = MyProfileResponse.fromJson(res);
-      selectedPeriodDate(obj.showUser?.first.periodDay.toString().validate());    
-      periodLength(obj.showUser?.first.averageCycleDays.toString().validate());      
+      selectedPeriodDate(obj.showUser?.first.periodDay.toString().validate());
+      periodLength(obj.showUser?.first.averageCycleDays.toString().validate());
       update();
     }
+  }
+
+  int mapenergy() {
+    if (zoomAnimationController.animationModel?.energy ==
+        AnimassetList().energylist[0])
+      return 54;
+    else if (zoomAnimationController.animationModel?.energy ==
+        AnimassetList().energylist[1])
+      return 55;
+    else if (zoomAnimationController.animationModel?.energy ==
+        AnimassetList().energylist[2])
+      return 56;
+    else if (zoomAnimationController.animationModel?.energy ==
+        AnimassetList().energylist[3])
+      return 57;
+    else if (zoomAnimationController.animationModel?.energy ==
+        AnimassetList().energylist[4])
+      return 58;
+    else
+      return 0;
   }
 
   List<String> getFormattedDay() {
@@ -64,10 +98,10 @@ class CalendarController extends GetxController with BaseController {
             DateFormat("yyyy-MM-dd").parse(selectedPeriodDate.value);
         String date = DateFormat("MMM dd").format(tempDate);
         rtstr.add(date);
-         DateTime tempDate1 =
-            DateFormat("yyyy-MM-dd").parse(periodLength.value);
+        DateTime tempDate1 = DateFormat("yyyy-MM-dd").parse(periodLength.value);
         String peroidlendate = DateFormat("dd").format(tempDate);
-        date = tempDate.add(Duration(days: int.parse(peroidlendate))).toString();
+        date =
+            tempDate.add(Duration(days: int.parse(peroidlendate))).toString();
         rtstr.add(date);
         return rtstr;
       } else {
@@ -79,12 +113,12 @@ class CalendarController extends GetxController with BaseController {
         return rtstr;
       }
     } catch (e) {
-       DateTime tempDate =
-            DateFormat("yyyy-MM-dd").parse(DateTime.now().toString());
-        String date = DateFormat("MMM dd").format(tempDate);
-        rtstr.add(date);
-        rtstr.add(date);
-        return rtstr;
+      DateTime tempDate =
+          DateFormat("yyyy-MM-dd").parse(DateTime.now().toString());
+      String date = DateFormat("MMM dd").format(tempDate);
+      rtstr.add(date);
+      rtstr.add(date);
+      return rtstr;
     }
   }
 
@@ -97,6 +131,7 @@ class CalendarController extends GetxController with BaseController {
     await getEnergies();
     createCycles();
     await getLoggedSymptoms();
+
     getGraphData();
     isLoading = false;
     update();
@@ -106,24 +141,31 @@ class CalendarController extends GetxController with BaseController {
     DateTime firstDate = DateTime(DateTime.now().year, DateTime.now().month, 1);
     DateTime lastDate =
         DateTime(DateTime.now().year, DateTime.now().month + 1, 0);
+        currentmonthstart = DateFormat("MMM dd").format(firstDate);
+        currentmonthend = DateFormat("MMM dd").format(lastDate);
+        curdif = (lastDate!.difference(firstDate).inDays.toInt()+1).toString();
     createCycle(
         firstDate: firstDate,
         lastDate: lastDate,
         moonList: moonList1,
         isCurrent: true);
-
     DateTime pFirstDate =
         DateTime(DateTime.now().year, DateTime.now().month - 1, 1);
     DateTime pLastDate = DateTime(DateTime.now().year, DateTime.now().month, 0);
+    prevdif = (pLastDate!.difference(pFirstDate).inDays.toInt()+1).toString();
     createCycle(
         firstDate: pFirstDate, lastDate: pLastDate, moonList: moonList2);
-
-
+        previosmonthstart = DateFormat("MMM dd").format(pFirstDate);
+        previosmontend =DateFormat("MMM dd").format( pLastDate);
     DateTime ppFirstDate =
         DateTime(DateTime.now().year, DateTime.now().month - 2, 1);
-    DateTime ppLastDate = DateTime(DateTime.now().year, DateTime.now().month-1, 0);
+    DateTime ppLastDate =
+        DateTime(DateTime.now().year, DateTime.now().month - 1, 0);
+        pprevdif = (ppLastDate!.difference(ppFirstDate).inDays.toInt()+1).toString();
     createCycle(
-        firstDate: ppFirstDate, lastDate: ppLastDate, moonList: moonList3);    
+        firstDate: ppFirstDate, lastDate: ppLastDate, moonList: moonList3);
+        ppmonthstart = DateFormat("MMM dd").format(ppFirstDate);
+        ppmonthend = DateFormat("MMM dd").format(ppLastDate);
   }
 
   Future<void> getLoggedSymptoms() async {
@@ -183,8 +225,7 @@ class CalendarController extends GetxController with BaseController {
           DateFormat("yyyy-MM-dd").parse(MySharedPref.getPeriodDay() ?? "");
       DateTime todayDate = DateTime.now();
       periodStartsIn = periodDate.difference(todayDate).inDays.toString();
-      if(int.parse(periodStartsIn) < 0)
-      {
+      if (int.parse(periodStartsIn) < 0) {
         debugPrint(periodStartsIn);
         periodStartsIn = (int.parse(periodStartsIn) + 30).toString();
       }
@@ -396,7 +437,8 @@ class CalendarController extends GetxController with BaseController {
             //         ["Energized"]["count"]
             //     .toString()));
           }
-          showGraph = true;
+
+          showGraph = MySharedPref.getProtype() != 1 ? false : true;
         }
       } catch (e) {
         debugPrint("Exception in chart data ${e.toString()}");
@@ -489,6 +531,8 @@ class EnergyInfo {
   EnergyInfo(
       {this.energyId, this.eneryName, this.energyColor, this.energyType});
 }
+
+
 
 
 // void getMoonsData2() {

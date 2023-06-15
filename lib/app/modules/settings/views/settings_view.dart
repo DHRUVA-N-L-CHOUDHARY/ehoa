@@ -77,14 +77,14 @@ class SettingsView extends StatelessWidget {
                 showTopBorder: false,
               ),
               sizedBox(height: 80),
-              MyListTile(
-                keyName: Strings.cycleSyncGoogleCalendar,
-                keyIcon: AppIcons.kgooglCal,
-                showTopBorder: true,
-                onTap: () {
-                  Get.toNamed(AppPages.CYCLE_SYNC_WITH_G_CAL);
-                },
-              ),
+              // MyListTile(
+              //   keyName: Strings.cycleSyncGoogleCalendar,
+              //   keyIcon: AppIcons.kgooglCal,
+              //   showTopBorder: true,
+              //   onTap: () {
+              //     Get.toNamed(AppPages.CYCLE_SYNC_WITH_G_CAL);
+              //   },
+              // ),
               MyListTile(
                 keyName: Strings.privacySettings,
                 keyIcon: AppIcons.kPrivacySetting,

@@ -21,23 +21,22 @@ class CycleLenController extends GetxController {
   RxBool isLoading = false.obs;
 
   Future saveLength() async {
-    if (selected.itemId== "-1") {
+    if (selected.itemId== "-1" || selected.itemId == null) {
       DialogHelper.showErrorDialog("Required", "Please enter cycle length");
       return;
     }
-
     isLoading(true);
     Map<String,dynamic>data = {
       'average_cycle_length':selected.itemId,
     };
     userOnboardingController.updateavgcyclelen(data['average_cycle_length']);
-    Map<String,dynamic> res = await ApiService().saveCycleLength(data);
+    // Map<String,dynamic> res = await ApiService().saveCycleLength(data);
     isLoading(false);
     update();
 
-    if (res.containsKey("token")) {
+    // if (res.containsKey("token")) {
       Get.toNamed(AppPages.PERIOD);
-    }
+    // }
   }
   var isAnimationCompleted = false;
 

@@ -8,7 +8,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../config/translations/strings_enum.dart';
 import '../../../data/remote/api_interface.dart';
-import '../../../routes/app_pages.dart';
 import '../controllers/wisdom_controller.dart';
 
 class WisdomView extends StatelessWidget {

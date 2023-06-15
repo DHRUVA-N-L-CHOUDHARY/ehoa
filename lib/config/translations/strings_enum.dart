@@ -147,6 +147,11 @@ class Strings {
       "Full access to learning tools about maramataka and māori culture";
   static const enterDiscCode = "Enter discount code";
 
+  //unlock premium screen
+  static const trackursys = "Track your symptoms";
+  static const graphurene = "Graph your energy";
+  static const emprurself = "Empower Yourself";
+
   //Subscription Page
   static const choosePlan = "Choose your plan";
   static const perMonth = "per month\npaid monthly";
@@ -316,10 +321,36 @@ class Strings {
 
   static const symptomsOfDay = "Symptoms of the day";
 
-  static String? addToYourJournal  = "Add to your journal";
+  static String? addToYourJournal = "Add to your journal";
 
-  static const  enterNoteHere  = "Enter a note here...";
+  static const enterNoteHere = "Enter a note here...";
 
   static const goBack = "Go Back";
 
+  static const miharo = "Mīharo! (amazing!)";
+  static const paitomahi = "Pai tō mahi (Good job)";
+  static const oflog = "of you logging your energy";
+  static const emotiontrends = "Emotion Trends";
+  static const trackcyclemoods =
+      "Track your cycle mood and unlock your potential";
+  static const tipofday = "Tip of the day";
+  static const tipofdaydescri =
+      "Write down three things you love about your body today (eg I love that my body breathes without me having to think about it)";
+
+
+  //remainders
+  static const remind = "Reminders";
+  static const cyclenotif = "Cycle Notification";
+  static const day1to3 = "Day 1-3 of Cycle";
+  static const day4to6 = "Day 4-6 of Cycle";
+  static const day7to12 = "Day 7-12 of Cycle";
+  static const day13to16 = "Day 13-16 of Cycle";
+  static const day17to23 = "Day 17-23 of Cycle";
+  static const day24to28or35 = "Day 24-28/35";
+  static const cstmsg = "Custom Message";
+  static const tdyblg = "Todays blogs";
+  static const todaytip = "Today's tip";
+  static const newartcleforu = "New article for you";
+  static const newcerfru = "New Ceremony for you";
+  static const sendnotifat = "Send notification at";
 }

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:ehoa/app/data/apiModels/country_list_response.dart';
 import 'package:ehoa/app/service/helper/dialog_helper.dart';
 import 'package:ehoa/app/service/user_onboarding_controller.dart';
@@ -83,13 +82,21 @@ class LocationController extends GetxController {
     }
 
 userOnboardingController.updatecontry(data['country_id'], data['group_id']);
-   Map<String,dynamic> res = await ApiService().saveCountry(data);
-    if (res.isNotEmpty) {
-    }
+  //  Map<String,dynamic> res = await ApiService().saveCountry(data);
+    // if (res.isNotEmpty) {
+    // }
     update();
     isLoading(false);
     Get.toNamed(AppPages.NAME);
 
+  }
+
+  Future filllater() async{
+    isLoading(true);
+     userOnboardingController.updatecontry("0", "0");
+    update();
+    isLoading(false);
+    Get.toNamed(AppPages.NAME);
   }
 
   @override

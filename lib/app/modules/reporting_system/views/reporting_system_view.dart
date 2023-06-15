@@ -1,8 +1,10 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:ehoa/app/components/Unlock_premium.dart';
 import 'package:ehoa/app/components/app_outlined_btn.dart';
 import 'package:ehoa/app/components/headings.dart';
 import 'package:ehoa/app/components/sizedbox_util.dart';
+import 'package:ehoa/app/data/local/my_shared_pref.dart';
 import 'package:ehoa/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,7 +30,11 @@ class ReportingSystemView extends StatelessWidget {
                 fit: BoxFit.fill, image: AssetImage(AppImages.gradBkgPng)),
           ),
           child: Scaffold(
-              appBar: MyAppBar(
+              appBar: MySharedPref.getProtype() != 1 ? AppBar(
+                backgroundColor: Colors.transparent,
+                automaticallyImplyLeading: false,
+                toolbarHeight: 75.h,
+              ) : MyAppBar(
                 leading: [
                   MyIconButton(
                       onTap: () {
@@ -48,83 +54,91 @@ class ReportingSystemView extends StatelessWidget {
                 ],
               ),
               backgroundColor: Colors.transparent,
-              body: ListView(
-                children: [
-                  sizedBox(height: 48),
-                  Container(
-                    margin:
-                        MyPadding.getFixedHorizontalAndDynamicVerticalInsets(),
-                    child: Column(
+              body: MySharedPref.getProtype() != 1
+                  ? UnlockPremium(
+                      close: () {
+                        Get.back();
+                      },
+                      descri: "Lorem Ipsum",
+                      heading: Strings.graphurene)
+                  : ListView(
                       children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: RSOptions(
-                                img: AppImages.rs1Png,
-                                text: Strings.cycleLen,
-                                onTap: () {
-                                  Get.toNamed(AppPages.RS_CYCLE_LEN);
-                                },
-                              ),
-                            ),
-                            sizedBox(width: 16),
-                            Expanded(
-                              child: RSOptions(
-                                img: AppImages.rs2Png,
-                                text: Strings.mood,
-                                onTap: () {
-                                  Get.toNamed(AppPages.MONTHLY_MOOD);
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                        sizedBox(height: 32),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: RSOptions(
-                                img: AppImages.rs3Png,
-                                text: Strings.energyGraph,
-                                onTap: () {
-                                  Get.toNamed(AppPages.ENERGY_GRAPH);
-                                },
-                              ),
-                            ),
-                            sizedBox(width: 16),
-                            Expanded(
-                              child: RSOptions(
-                                img: AppImages.rs4Png,
-                                text: Strings.journal,
-                                onTap: () {
-                                  Get.toNamed(AppPages.JOURNAL);
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                        sizedBox(height: 57),
-                        GlassContainer(
+                        sizedBox(height: 48),
+                        Container(
+                          margin: MyPadding
+                              .getFixedHorizontalAndDynamicVerticalInsets(),
                           child: Column(
                             children: [
-                              headingText(Strings.exportNow),
-                              sizedBox(height: 8),
-                              subHeadingText(Strings.exportNowSub),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: RSOptions(
+                                      img: AppImages.rs1Png,
+                                      text: Strings.cycleLen,
+                                      onTap: () {
+                                        Get.toNamed(AppPages.RS_CYCLE_LEN);
+                                      },
+                                    ),
+                                  ),
+                                  sizedBox(width: 16),
+                                  Expanded(
+                                    child: RSOptions(
+                                      img: AppImages.rs2Png,
+                                      text: Strings.mood,
+                                      onTap: () {
+                                        Get.toNamed(AppPages.MONTHLY_MOOD);
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
                               sizedBox(height: 32),
-                              AppOutlineButton(
-                                  btnText: Strings.exportToPdf, ontap: () {})
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: RSOptions(
+                                      img: AppImages.rs3Png,
+                                      text: Strings.energyGraph,
+                                      onTap: () {
+                                        Get.toNamed(AppPages.ENERGY_GRAPH);
+                                      },
+                                    ),
+                                  ),
+                                  sizedBox(width: 16),
+                                  Expanded(
+                                    child: RSOptions(
+                                      img: AppImages.rs4Png,
+                                      text: Strings.journal,
+                                      onTap: () {
+                                        Get.toNamed(AppPages.JOURNAL);
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              sizedBox(height: 57),
+                              GlassContainer(
+                                child: Column(
+                                  children: [
+                                    headingText(Strings.exportNow),
+                                    sizedBox(height: 8),
+                                    subHeadingText(Strings.exportNowSub),
+                                    sizedBox(height: 32),
+                                    AppOutlineButton(
+                                        btnText: Strings.exportToPdf,
+                                        ontap: () {})
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         )
                       ],
-                    ),
-                  )
-                ],
-              )));
+                    )));
     });
   }
 }
@@ -150,9 +164,10 @@ class GlassContainer extends StatelessWidget {
       children: [
         Expanded(
           child: Container(
-            margin: margin, //?? MyPadding.getFixedHorizontalAndDynamicVerticalInsets(),
-            padding:
-                padding ?? EdgeInsets.symmetric(horizontal: 16.h, vertical: 16.h),
+            margin:
+                margin, //?? MyPadding.getFixedHorizontalAndDynamicVerticalInsets(),
+            padding: padding ??
+                EdgeInsets.symmetric(horizontal: 16.h, vertical: 16.h),
             decoration: MyDecoration.getGlassDecoration(),
             child: child,
           ),

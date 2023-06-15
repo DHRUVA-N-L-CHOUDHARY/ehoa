@@ -1,5 +1,4 @@
 // ignore_for_file: unused_local_variable
-
 import 'package:ehoa/app/service/user_onboarding_controller.dart';
 import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,6 +11,7 @@ import 'package:get_it/get_it.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'app/data/local/my_shared_pref.dart';
+import 'app/modules/zoom_animation/controllers/zoom_animation_controller.dart';
 import 'app/routes/app_pages.dart';
 import 'app/routes/app_service.dart';
 import 'config/theme/my_theme.dart';
@@ -32,6 +32,7 @@ Future<void> main() async {
    await Firebase.initializeApp();
   String storageLocation = (await getApplicationDocumentsDirectory()).path;
    UserOnboardingController userOnboardingController = Get.put(UserOnboardingController());
+ ZoomAnimationController zoomAnimationController = Get.put(ZoomAnimationController());
   await FastCachedImageConfig.init(subDir: storageLocation, clearCacheAfter: const Duration(days: 15));
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await flutterLocalNotificationsPlugin
@@ -52,7 +53,6 @@ Future<void> main() async {
   // await FcmHelper.initFcm();
 
   runApp(
-    
     ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
@@ -88,7 +88,7 @@ Future<void> main() async {
     ),
   );
 }
- AndroidNotificationChannel channel =  AndroidNotificationChannel(
+ AndroidNotificationChannel channel =  const AndroidNotificationChannel(
   'high_importance_channel', // id
   'High Importance Notifications' ,// title
  'This channel is used for important notifications.', // description,

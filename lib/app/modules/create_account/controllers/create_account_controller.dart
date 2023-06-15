@@ -92,6 +92,9 @@ class CreateAccountController extends GetxController {
             parseInt(obj.showUser?.first.averageCycleDays.toString()));
         MySharedPref.setCycleLen(
             parseInt(obj.showUser?.first.averageCycleLength.toString()));
+        MySharedPref.setCycleLen(
+            parseInt(obj.showUser?.first.ispro.toString()));
+            
       }
       isLoading(false);
 

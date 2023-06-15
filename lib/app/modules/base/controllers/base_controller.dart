@@ -8,6 +8,7 @@ import 'package:ehoa/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../config/translations/strings_enum.dart';
 import '../../calendar/bindings/calendar_binding.dart';
 import '../../calendar/controllers/calendar_controller.dart';
 import '../../calendar/views/calendar_view.dart';
@@ -29,7 +30,16 @@ class BaseControlller extends GetxController {
     AppPages.EMPOWER,
   ];
 
-
+ List<List<String>> txts = [
+  [
+    Strings.trackursys,
+    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
+  ],
+  [
+    Strings.emprurself,
+    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
+  ]
+ ];
   void changePage(int index) {
     selectedIndex = index;
     update();
@@ -91,7 +101,6 @@ class BaseControlller extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
     update();
   }
 }

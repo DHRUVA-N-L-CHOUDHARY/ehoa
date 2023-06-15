@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:ehoa/app/components/app_icon_btn.dart';
 import 'package:ehoa/app/components/app_outlined_btn.dart';
 import 'package:ehoa/app/components/common/app_utils.dart';
+import 'package:ehoa/app/data/local/my_shared_pref.dart';
 import 'package:ehoa/app/data/remote/api_service.dart';
 import 'package:ehoa/app/modules/splash/controllers/splash_controller.dart';
 import 'package:ehoa/app/modules/tnc/views/tnc_view.dart';
@@ -14,6 +15,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:lottie/lottie.dart';
@@ -185,15 +187,17 @@ class _SplashState extends State<Splash> {
                   ),
                 ),
                 onPressed: () {
-                  c.signInWithApple().then((value) {
-                        Map<String, dynamic> data = {
-                          "email": value.user?.email,
-                          "password": value.user?.uid.replaceRange(8, value.user?.uid.length, ''),
-                        };
-                        ApiService()
-                            .createUserAccount(data)
-                            .then((value1) => Get.offNamed(AppPages.TNC));
-                      });
+                  c.socialloginController.signInWithApple().then((value) {
+                    Map<String, dynamic> data = {
+                      "email": value.user?.email,
+                      "password": value.user?.uid
+                          .replaceRange(8, value.user?.uid.length, ''),
+                      "is_social": "1"
+                    };
+                    ApiService().newSocialUserlogin(data).then((value1) {
+                      c.socialRegisterApiCall(value1);
+                    });
+                  });
                 },
                 label: Padding(
                     padding: const EdgeInsets.all(13.0),
@@ -217,14 +221,16 @@ class _SplashState extends State<Splash> {
                       color: Colors.red,
                     ),
                     onTap: () {
-                      c.signInWithGoogle().then((value) {
+                      c.socialloginController.signInWithGoogle().then((value) {
                         Map<String, dynamic> data = {
                           "email": value.user?.email,
-                          "password": value.user?.uid.replaceRange(8, value.user?.uid.length, '')
+                          "password": value.user?.uid
+                              .replaceRange(8, value.user?.uid.length, ''),
+                          "is_social": "1"
                         };
-                        ApiService()
-                            .createUserAccount(data)
-                            .then((value1) => Get.offNamed(AppPages.TNC));
+                        ApiService().newSocialUserlogin(data).then((value1) {
+                          c.socialRegisterApiCall(value1);
+                        });
                       });
                     },
                     padding: const EdgeInsets.all(13.0),
@@ -237,14 +243,16 @@ class _SplashState extends State<Splash> {
                   child: AppIconButton(
                     icon: const Icon(Icons.facebook),
                     onTap: () {
-                      c.facebooklogin().then((value) {
+                      c.socialloginController.facebooklogin().then((value) {
                         Map<String, dynamic> data = {
                           "email": value.user?.email,
-                          "password": value.user?.uid.replaceRange(8, value.user?.uid.length, '')
+                          "password": value.user?.uid
+                              .replaceRange(8, value.user?.uid.length, ''),
+                          "is_social": "1"
                         };
-                        ApiService()
-                            .createUserAccount(data)
-                            .then((value1) => Get.offNamed(AppPages.TNC));
+                        ApiService().newSocialUserlogin(data).then((value1) {
+                          c.socialRegisterApiCall(value1);
+                        });
                       });
                     },
                     padding: const EdgeInsets.all(13.0),

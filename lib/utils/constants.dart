@@ -83,6 +83,31 @@ class AppImages {
   static String get animhigh => 'assets/images/anim_high.png';
   static String get animveryhigh => 'assets/images/anim_veryhigh.png';
   static String get expanm => 'assets/images/expanded_anim.png';
+  static String get zoomverylow => "assets/images/zoom_very_low.png";
+  static String get zoomlow => "assets/images/zoom_low.png";
+  static String get zoombal => "assets/images/zoom_bal.png";
+  static String get zoomhigh => "assets/images/zoom_high.png";
+  static String get zoomveryhigh => "assets/images/zoom_very_high.png";
+  static String get zoomoutverylow => "assets/images/zoom_out_very_low.png";
+  static String get zoomoutveryhigh => "assets/images/zoom_out_very_high.png";
+  static String get zoomoutlow => "assets/images/zoom_out_low.png";
+  static String get zoomoutbal => "assets/images/zoom_out_bal.png";
+  static String get zoomouthigh => "assets/images/zoom_out_high.png";
+  static String get baseverylow => "assets/images/base_very_low.png";
+  static String get baselow => "assets/images/base_low.png";
+  static String get basebal => "assets/images/base_bal.png";
+  static String get basehigh => "assets/images/base_high.png";
+  static String get baseveryhigh => "assets/images/base_very_high.png";
+  static String get bkgcal => "assets/images/bkg_cal.png";
+  static String get bkgellipse => "assets/images/Ellipse_anim.png";
+  static String get bkgmoons => "assets/images/moons_bkg.png";
+  static String get smapleEnergyGraphic => 'assets/images/Group 252.png';
+  static String get bkggdjflw => "assets/images/bkg_gdj_flw.png";
+  static String get gdjdlgdsg => "assets/images/gdj_dlg_dsg.png";
+  static String get sucessdecor => "assets/images/decoration.png";
+  static String get unlockpremi => "assets/images/unlock_premi.png";
+  static String get hexgraph => "assets/images/hex_graph.png";
+  static String get curvedmoonicon => 'assets/images/moon_icon.png';
 }
 
 class AppIcons {
@@ -124,13 +149,13 @@ class AppIcons {
       'assets/vectors/empower_selected.svg';
   static String get kCalendarSelectedIcon =>
       'assets/vectors/calendar_selected.svg';
+      
 
   static const flowLog = 'assets/vectors/flow_log.svg';
   static const energyLog = 'assets/vectors/energy_log.svg';
   static const noteLog = 'assets/vectors/notes_log.svg';
   static const emotionLog = 'assets/vectors/emotion_log.svg';
   static const andesgn = 'assets/images/animation_design.png';
-  static const smapleEnergyGraphic = 'assets/images/Group 252.png';
   static const smpleCycleImg = 'assets/images/smple_cycle_img.png';
   static const cycleeEnergyGraphic = 'assets/images/cylcle_energy_graphic.png';
   static const thunderPng = 'assets/images/thunder.png';
@@ -179,11 +204,7 @@ class Moons {
   static const balmoon = "assets/images/Moon Balanced.png";
   static const highmoon = "assets/images/Moon High Energy.png";
   static const veryhighmoon = "assets/images/Moon Very High Energy.png";
-  static const zoomverylow = "assets/images/zoom_very_low.png";
-  static const zoomlow = "assets/images/zoom_low.png";
-  static const zoombal = "assets/images/zoom_bal.png";
-  static const zoomhigh = "assets/images/zoom_high.png";
-  static const zoomveryhigh = "assets/images/zoom_very_high.png";
+
 }
 
 class Gifs {

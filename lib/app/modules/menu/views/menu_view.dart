@@ -1,4 +1,5 @@
 import 'package:ehoa/app/components/app_bar.dart';
+import 'package:ehoa/app/components/headings.dart';
 import 'package:ehoa/app/components/my_icon_button.dart';
 import 'package:ehoa/app/components/sizedbox_util.dart';
 import 'package:ehoa/app/data/local/my_shared_pref.dart';
@@ -74,12 +75,14 @@ class MenuView extends StatelessWidget {
                             ),
                             sizedBox(width: 23),
                             Container(
-                              width: MediaQuery.of(context).size.width*0.5,
+                              width: MediaQuery.of(context).size.width * 0.5,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    MySharedPref.getName().isEmpty?"Username":MySharedPref.getName(),
+                                    MySharedPref.getName().isEmpty
+                                        ? "Username"
+                                        : MySharedPref.getName(),
                                     style: MyStyles.getTextStyle(
                                         fontFamily: AppFonts.kInterRegular,
                                         fontSize: 16,
@@ -104,17 +107,40 @@ class MenuView extends StatelessWidget {
                 ),
               ),
               sizedBox(height: 40),
+            MySharedPref.getProtype() != 1 ?  GestureDetector(
+                onTap: (){
+                  Get.toNamed(AppPages.PAYWALL);
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(25.w))),
+                  child: Padding(
+                          padding: const EdgeInsets.all(20.0).w,
+                    child: Center(
+                      child: subHeadingText("Upgrade to Premium",
+                          color: Colors.black, fontSize: 24.sp),
+                    ),
+                  ),
+                ),
+              ) : Container(),
+              sizedBox(height: 40),
               MyListTile(
                 keyName: Strings.reportingSystem,
                 keyIcon: AppIcons.kRepSysIcon,
                 showTopBorder: true,
                 onTap: () {
-                  Get.toNamed(AppPages.REPORTING_SYSTEM);
+                  MySharedPref.getProtype() != 1 ?
+                  Get.toNamed(AppPages.REPORTING_SYSTEM) : Get.toNamed(AppPages.REPORTING_SYSTEM);
                 },
               ),
               MyListTile(
                 keyName: Strings.remNoti,
                 keyIcon: AppIcons.kNotiIcon,
+                onTap: (){
+                  Get.toNamed(AppPages.REMAINDERS);
+                },
               ),
               MyListTile(
                 keyName: Strings.settings,
@@ -130,9 +156,9 @@ class MenuView extends StatelessWidget {
               MyListTile(
                 keyName: Strings.help,
                 keyIcon: AppIcons.kHelpIcon,
-                onTap: (){
-                  Get.toNamed(AppPages.SINGLE_CONTENT, arguments: Endpoints.HELP.toString());
-
+                onTap: () {
+                  Get.toNamed(AppPages.SINGLE_CONTENT,
+                      arguments: Endpoints.HELP.toString());
                 },
               ),
               MyListTile(
@@ -151,7 +177,7 @@ class MenuView extends StatelessWidget {
                 keyName: Strings.logout,
                 keyIcon: AppIcons.kLogoutIcon,
                 showBottomBorder: false,
-                onTap: (){
+                onTap: () {
                   Get.dialog(
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -192,14 +218,15 @@ class MenuView extends StatelessWidget {
                                             style: ElevatedButton.styleFrom(
                                               minimumSize: const Size(0, 45),
                                               primary: Colors.grey,
-                                              onPrimary: const Color(0xFFFFFFFF),
+                                              onPrimary:
+                                                  const Color(0xFFFFFFFF),
                                               shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(8),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
                                               ),
                                             ),
                                             onPressed: () {
                                               Get.back();
-
                                             },
                                           ),
                                         ),
@@ -212,16 +239,17 @@ class MenuView extends StatelessWidget {
                                             style: ElevatedButton.styleFrom(
                                               minimumSize: const Size(0, 45),
                                               primary: Colors.grey,
-                                              onPrimary: const Color(0xFFFFFFFF),
+                                              onPrimary:
+                                                  const Color(0xFFFFFFFF),
                                               shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(8),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
                                               ),
                                             ),
                                             onPressed: () {
                                               Get.back();
                                               MySharedPref.clearSession();
                                               Get.offAllNamed(AppPages.INITIAL);
-
                                             },
                                           ),
                                         ),

@@ -3,19 +3,17 @@ import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:ehoa/app/data/local/my_shared_pref.dart';
 import 'package:ehoa/app/routes/app_pages.dart';
 import 'package:ehoa/app/routes/app_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ehoa/app/service/social_login_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import '../../../data/apiModels/MyProfileRes.dart';
 import '../../../data/remote/api_service.dart';
 import '../../login/controllers/login_controller.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'dart:math';
 import 'package:crypto/crypto.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class SplashController extends GetxController {
+  SocialloginController socialloginController =
+      Get.put(SocialloginController());
   bool isAnimationCompleted = false;
   double beginY = 0, endY = -30;
   bool isLoading = true;
@@ -40,47 +38,10 @@ class SplashController extends GetxController {
     }
   }
 
-  Future<UserCredential> facebooklogin() async {
-    final LoginResult loginResult = await FacebookAuth.instance.login();
-    final OAuthCredential facebookAuthCredential =
-        FacebookAuthProvider.credential(loginResult.accessToken!.token);
-    return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-  }
-
-  Future<UserCredential> signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-    return await FirebaseAuth.instance.signInWithCredential(credential);
-  }
-
-  Future<UserCredential> signInWithApple() async {
-    final rawNonce = generateNonce();
-    final nonce = sha256ofString(rawNonce);
-    final appleCredential = await SignInWithApple.getAppleIDCredential(
-      scopes: [
-        AppleIDAuthorizationScopes.email,
-        AppleIDAuthorizationScopes.fullName,
-      ],
-      nonce: nonce,
-    );
-    final oauthCredential = OAuthProvider("apple.com").credential(
-      idToken: appleCredential.identityToken,
-      rawNonce: rawNonce,
-    );
-    return await FirebaseAuth.instance.signInWithCredential(oauthCredential);
-  }
-
-  String generateNonce([int length = 32]) {
-    final charset =
-        '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
-    final random = Random.secure();
-    return List.generate(length, (_) => charset[random.nextInt(charset.length)])
-        .join();
+  @override
+  void dispose() {
+    super.dispose();
+    socialloginController.dispose();
   }
 
   /// Returns the sha256 hash of [input] in hex notation.
@@ -126,8 +87,33 @@ class SplashController extends GetxController {
     return utf8.decode(base64Url.decode(output));
   }
 
-  _socialRegisterApiCall(String email, String name) async{
-
+  socialRegisterApiCall(dynamic res) async {
+    socialLoader(false);
+    if (res.isNotEmpty) {
+      MySharedPref.setToken(res['token']);
+      MySharedPref.setUserId(res['user_id'].toString());
+      print("dsjfldkfjdjflds");
+      Map<String, dynamic> profileMap = await ApiService()
+          .showProfile(id: (res['user_id'].toString()));
+      if (profileMap.isNotEmpty) {
+        MyProfileResponse obj = MyProfileResponse.fromJson(profileMap);
+        MySharedPref.setEmail(obj.showUser?.first.email ?? "");
+        MySharedPref.setName(obj.showUser?.first.name ?? "");
+        MySharedPref.setPeriodDay(obj.showUser?.first.periodDay ?? "");
+        MySharedPref.setPeriodLen(
+            parseInt(obj.showUser?.first.averageCycleDays.toString()));
+        MySharedPref.setCycleLen(
+            parseInt(obj.showUser?.first.averageCycleLength.toString()));
+            MySharedPref.setProtype(
+              parseInt(obj.showUser?.first.ispro.toString()));
+        debugPrint("sdlkjdsfkd");
+        debugPrint(
+            "<<< Period day ${MySharedPref.getPeriodDay()}, PeriodLen ${MySharedPref.getPeriodLen()} >>>");
+      }
+      socialLoader(false);
+      Get.offAllNamed(AppPages.TNC);
+    }
+    socialLoader(false);
   }
 
   _socialLoginApiCall(String email) async {
@@ -150,6 +136,10 @@ class SplashController extends GetxController {
             parseInt(obj.showUser?.first.averageCycleDays.toString()));
         MySharedPref.setCycleLen(
             parseInt(obj.showUser?.first.averageCycleLength.toString()));
+        MySharedPref.setProtype(
+              parseInt(obj.showUser?.first.ispro.toString()));
+        debugPrint("dsssdlkjdsfkd");
+
         debugPrint(
             "<<< Period day ${MySharedPref.getPeriodDay()}, PeriodLen ${MySharedPref.getPeriodLen()} >>>");
       }

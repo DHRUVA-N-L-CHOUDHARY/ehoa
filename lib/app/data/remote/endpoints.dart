@@ -4,7 +4,8 @@ class Endpoints {
   static const HELP = "23";
   static const createUser = "create-user";
   static const userTermsAndCondition = "user-term-conditions";
-  static const newsocialuserlogin = "new";
+  static const newsocialuserlogin = "new-user-social-login";
+  static const existingsocialuserlogin = "existing-user-social-login";
   static const saveCountries = "save-countries";
   static const saveName = "save-name";
   static const saveDob = "save-dob";
@@ -34,6 +35,7 @@ class Endpoints {
   static const radarChartEndpoint = "show-current-cycle-emotion/";
   static const showTipsEnergy = "show-tips-energy/";
   static const showTips = "show-tips/";
+  static const getips = "get-tips/";
   static const showWisdomTips = "show-wisdom-tips/";
   static const showWisdomBlogs = "show-wisdom-blogs/";
   static const showWisdomPodcasts = "show-wisdom-podcasts/";
@@ -43,4 +45,6 @@ class Endpoints {
   static const saveSymptoms = "save-symptoms";
   static const showSymptoms = "show-symptoms";
   static const showSymptomsBetweenDates = "show-symptoms-between-dates";
+  static const saveenergy = "save-energy";
+  static const saveurdetails = "save-details";
 }

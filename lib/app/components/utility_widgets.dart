@@ -21,8 +21,8 @@ Row socialLoginButtons() {
             Ionicons.logo_google,
             color: Colors.red,
           ),
-          onTap: (){
-          Get.toNamed(AppPages.BASE);
+          onTap: () {
+            Get.toNamed(AppPages.BASE);
           },
         ),
       ),
@@ -35,7 +35,7 @@ Row socialLoginButtons() {
           Icons.apple,
           color: Colors.black,
         ),
-        onTap: (){
+        onTap: () {
           Get.toNamed(AppPages.BASE);
         },
       )),
@@ -45,8 +45,8 @@ Row socialLoginButtons() {
       Expanded(
         child: AppIconButton(
           icon: const Icon(Icons.facebook),
-          onTap: (){
-          Get.toNamed(AppPages.BASE);
+          onTap: () {
+            Get.toNamed(AppPages.BASE);
           },
         ),
       )

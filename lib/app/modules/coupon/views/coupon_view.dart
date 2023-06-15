@@ -1,6 +1,7 @@
 import 'package:ehoa/app/components/app_outlined_btn.dart';
 import 'package:ehoa/app/components/headings.dart';
 import 'package:ehoa/app/components/sizedbox_util.dart';
+import 'package:ehoa/app/data/models/user_model.dart';
 import 'package:ehoa/config/theme/my_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -61,6 +62,7 @@ class CouponView extends StatelessWidget {
                               ? Center(
                                 child:  Column(
                                       children: [
+                                        sizedBox(height: 30),
                                         Image.asset(AppImages.kKoru),
                                         sizedBox(height: 80),
                                         headingText(Strings.codeSuccess.tr),
@@ -70,12 +72,11 @@ class CouponView extends StatelessWidget {
                                         sizedBox(height: 48),
                                         AppOutlineButton(
                                           btnText: Strings.getPremiumForYear,
-                                          ontap: () {
+                                          ontap: () async{
                                             Get.toNamed(AppPages.BASE);
                                             debugPrint("ABLE TO PRESS");},
                                         )
                                       ],
-                                    
                                 ),
                               )
                               : Center(
@@ -124,7 +125,9 @@ class CouponView extends StatelessWidget {
                                   ),
                               ),
                         ),
-                      
+                      c.showSuccess! ?
+                      Image.asset(AppImages.sucessdecor)
+                      : Container()
                     ],
                   )
                 ],

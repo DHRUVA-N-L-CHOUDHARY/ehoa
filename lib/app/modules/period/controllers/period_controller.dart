@@ -29,13 +29,13 @@ class PeriodController extends GetxController {
       'average_cycle_days': selected?.itemId,
     };
 userOnboardingController.updateavgcycledays(data['average_cycle_days']);
-    Map<String, dynamic> res = await ApiService().savePeriod(data);
+    // Map<String, dynamic> res = await ApiService().savePeriod(data);
     isLoading(false);
     update();
 
-    if (res.containsKey("token")) {
+    // if (res.containsKey("token")) {
       Get.toNamed(AppPages.LANG);
-    }
+    // }
   }
 
   @override

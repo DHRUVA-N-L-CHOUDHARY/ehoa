@@ -3,7 +3,6 @@ import 'package:ehoa/app/service/user_onboarding_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../data/remote/api_service.dart';
 import '../../../routes/app_pages.dart';
 
 class NameController extends GetxController {
@@ -24,10 +23,10 @@ class NameController extends GetxController {
     };
     userOnboardingController.updatename(
         data['name'] ?? "",);
-    Map<String,dynamic> res = await ApiService().saveName(data);
-    if (res.isNotEmpty) {
+    // Map<String,dynamic> res = await ApiService().saveName(data);
+    // if (res.isNotEmpty) {
 
-    }
+    // }
     update();
     isLoading(false);
     Get.toNamed(AppPages.AGE);

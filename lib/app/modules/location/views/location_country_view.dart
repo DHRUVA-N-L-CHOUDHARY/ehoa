@@ -25,69 +25,69 @@ class LocationCountyView extends StatelessWidget {
             image: DecorationImage(
                 fit: BoxFit.fill, image: AssetImage(AppImages.kLocation2Bkg)),
           ),
-          child: baseBody(c.isLoading.value, Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Column(
-              children: [
-                sizedBox(height: 25),
-                sizedBox(height: 25),
-                const PopupHeader(headerText: Strings.enterTheCountryYouRin),
-                Expanded(
-                    child: SingleChildScrollView(
+          child: baseBody(
+              c.isLoading.value,
+              Scaffold(
+                backgroundColor: Colors.transparent,
+                body: Column(
+                  children: [
+                    sizedBox(height: 25),
+                    sizedBox(height: 25),
+                    const PopupHeader(
+                        headerText: Strings.enterTheCountryYouRin),
+                    Expanded(
+                        child: SingleChildScrollView(
                       child: c.isCAnimationCompleted
                           ? animatedUI(c)
                           : FadeInAnimation(
-                        child: animatedUI(c),
-                        animDuration: const Duration(seconds: 1),
-                        animStatus: (status) {
-                          if (status == AnimStatus.completed) {
-                            c.isCAnimationCompleted = true;
-                          }
-                        },
-                      ),
+                              child: animatedUI(c),
+                              animDuration: const Duration(seconds: 1),
+                              animStatus: (status) {
+                                if (status == AnimStatus.completed) {
+                                  c.isCAnimationCompleted = true;
+                                }
+                              },
+                            ),
                     ))
-              ],
-            ),
-            bottomNavigationBar: Container(
-                margin: EdgeInsets.only(top: 24.h),
-                padding: EdgeInsets.symmetric(horizontal: 24.h),
-                height: 90.h,
-                child: Wrap(
-                  children: [
-                    AppOutlineButton(
-                        btnText: Strings.fillOutLater.tr, ontap: () {
-                      Get.toNamed(AppPages.NAME);
-
-
-                    }),
                   ],
-                )),
-          )));
+                ),
+                bottomNavigationBar: Container(
+                    margin: EdgeInsets.only(top: 24.h),
+                    padding: EdgeInsets.symmetric(horizontal: 24.h),
+                    height: 90.h,
+                    child: Wrap(
+                      children: [
+                        AppOutlineButton(
+                            btnText: Strings.fillOutLater.tr,
+                            ontap: () {
+                              c.filllater();
+                            }),
+                      ],
+                    )),
+              )));
     });
   }
 
   Widget animatedUI(LocationController c) {
     return Column(
-                    children: List.generate(c.list.length, (index) {
-                      return ListSelectionTile(
-                        data: c.list[index],
-                        onTap: () {
-                          for (var element in c.list) {
-                            element.setIsSelected = false.obs;
-                          }
-                          c.list[index].setIsSelected = RxBool(!c.list[index].getIsSelected!.value);
-                          c.update();
-                          c.selectedData = c.list[index];
-                          c.selectedTribe = null;
-                          c.iwiHapu.setIsSelected = false.obs;
-                          Get.toNamed(AppPages.LOCATION_TRIBE);
-                        },
-                      );
-                      //ListSelectionTile(index);
-                    }),
-                  
-              );
+      children: List.generate(c.list.length, (index) {
+        return ListSelectionTile(
+          data: c.list[index],
+          onTap: () {
+            for (var element in c.list) {
+              element.setIsSelected = false.obs;
+            }
+            c.list[index].setIsSelected =
+                RxBool(!c.list[index].getIsSelected!.value);
+            c.update();
+            c.selectedData = c.list[index];
+            c.selectedTribe = null;
+            c.iwiHapu.setIsSelected = false.obs;
+            Get.toNamed(AppPages.LOCATION_TRIBE);
+          },
+        );
+        //ListSelectionTile(index);
+      }),
+    );
   }
 }
-
-

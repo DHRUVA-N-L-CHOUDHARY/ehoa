@@ -1,11 +1,8 @@
 import 'package:ehoa/app/data/local/data_list_model.dart';
 import 'package:ehoa/app/modules/blog/controllers/blog_controller.dart';
 import 'package:ehoa/app/modules/empower/controllers/empower_controller.dart';
-import 'package:ehoa/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../../config/translations/strings_enum.dart';
 import '../../../data/apiModels/SubCatWisdomRes.dart';
 import '../../../data/local/subcategory_id.dart';
 import '../../../data/remote/api_service.dart';

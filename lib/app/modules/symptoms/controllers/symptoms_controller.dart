@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 
 import 'package:ehoa/app/components/common/constant_data.dart';
@@ -32,6 +34,8 @@ class SymptomsController extends GetxController with BaseController {
     init();
   }
 
+  int? is_pro;
+
   Future<void> init() async {
     menstrualFlow = List.empty();
     symptoms = List.empty();
@@ -42,6 +46,9 @@ class SymptomsController extends GetxController with BaseController {
     selectedMensFlowIndex = -1;
     selectedEnergyIndex = -1;
     selectedEmotionIndex = -1;
+
+    is_pro = MySharedPref.getProtype();
+    debugPrint(is_pro.toString());
 
     menstrualFlow = fetchDisordersById(APP_MENSTRUAL_FLOW);
     update();

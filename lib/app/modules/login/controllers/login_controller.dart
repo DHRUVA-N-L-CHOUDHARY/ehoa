@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:auth0_flutter/auth0_flutter.dart';
+import 'package:ehoa/app/service/social_login_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -15,6 +16,8 @@ class LoginController extends GetxController {
   bool isAnimationCompleted = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  SocialloginController socialloginController =
+      Get.put(SocialloginController());
   Auth0 auth0 = Auth0(
       'dev-xaoieegxph0mwc8w.us.auth0.com', 'Jz6KIuNPDDiWnjbeZfoU7Ecojs7gkSwN');
 
@@ -49,7 +52,9 @@ class LoginController extends GetxController {
           MySharedPref.setPeriodLen(
               parseInt(obj.showUser?.first.averageCycleDays.toString()));
           MySharedPref.setCycleLen(
-              parseInt(obj.showUser?.first.averageCycleLength.toString()));          
+              parseInt(obj.showUser?.first.averageCycleLength.toString()));
+          MySharedPref.setProtype(
+              parseInt(obj.showUser?.first.ispro.toString()));
         }
         Get.offAllNamed(AppPages.BASE);
       }
@@ -72,10 +77,10 @@ class LoginController extends GetxController {
         MySharedPref.setEmail(obj.showUser?.first.email ?? "");
         MySharedPref.setName(obj.showUser?.first.name ?? "");
         MySharedPref.setPeriodDay(obj.showUser?.first.periodDay ?? "");
-          MySharedPref.setPeriodLen(
-              parseInt(obj.showUser?.first.averageCycleDays.toString()));
+        MySharedPref.setPeriodLen(
+            parseInt(obj.showUser?.first.averageCycleDays.toString()));
         MySharedPref.setCycleLen(
-              parseInt(obj.showUser?.first.averageCycleLength.toString()));            
+            parseInt(obj.showUser?.first.averageCycleLength.toString()));
       }
       isLoading(false);
 
@@ -110,13 +115,29 @@ class LoginController extends GetxController {
     }
   }
 
-  void socialLogin() async {
-    final credentials = await auth0
-        .webAuthentication(
-            scheme:
-                "ehoa://dev-xaoieegxph0mwc8w.us.auth0.com/android/org.netgains.ehoa/callback")
-        .login(useEphemeralSession: true);
-    parseJwt(credentials.idToken);
+  void socialLogin(dynamic res) async {
+    isLoading(true);
+    if (res.isNotEmpty) {
+      MySharedPref.setToken(res['token']);
+      MySharedPref.setUserId(res['user_id'].toString());
+      Map<String, dynamic> profileMap =
+          await ApiService().showProfile(id: res['user_id'].toString());
+      if (profileMap.isNotEmpty) {
+        MyProfileResponse obj = MyProfileResponse.fromJson(profileMap);
+        MySharedPref.setEmail(obj.showUser?.first.email ?? "");
+        MySharedPref.setName(obj.showUser?.first.name ?? "");
+        MySharedPref.setPeriodDay(obj.showUser?.first.periodDay ?? "");
+        MySharedPref.setPeriodLen(
+            parseInt(obj.showUser?.first.averageCycleDays.toString()));
+        MySharedPref.setCycleLen(
+            parseInt(obj.showUser?.first.averageCycleLength.toString()));
+      }
+      Get.offAllNamed(AppPages.BASE);
+      isLoading(false);
+
+      Get.offAllNamed(AppPages.BASE);
+    }
+    isLoading(false);
   }
 
   parseJwt(String token) async {
@@ -153,6 +174,11 @@ class LoginController extends GetxController {
     }
 
     return utf8.decode(base64Url.decode(output));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }
 

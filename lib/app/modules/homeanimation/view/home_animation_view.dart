@@ -1,6 +1,7 @@
 import 'package:ehoa/app/components/anim_widget.dart';
 import 'package:ehoa/app/components/headings.dart';
 import 'package:ehoa/app/modules/homeanimation/controller/home_animation_controller.dart';
+import 'package:ehoa/app/routes/app_pages.dart';
 import 'package:ehoa/app/routes/app_service.dart';
 import 'package:ehoa/config/theme/light_theme_colors.dart';
 import 'package:ehoa/utils/constants.dart';
@@ -25,6 +26,9 @@ class HomeAnimationView extends StatelessWidget {
           children: [
             Positioned(
               child: GestureDetector(
+                onDoubleTap: (){
+                  Get.offNamed(AppPages.ZOOM_ANIMATION);
+                },
                 child: Container(
                   height:
                       (MediaQuery.of(AppService.getContext()).size.height).h,
