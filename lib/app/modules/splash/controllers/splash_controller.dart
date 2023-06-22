@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:auth0_flutter/auth0_flutter.dart';
+import 'package:ehoa/app/data/apiModels/CMSDetailResponse.dart';
+import 'package:ehoa/app/data/apiModels/CMSResponse.dart';
 import 'package:ehoa/app/data/local/my_shared_pref.dart';
+import 'package:ehoa/app/data/remote/endpoints.dart';
 import 'package:ehoa/app/routes/app_pages.dart';
 import 'package:ehoa/app/routes/app_service.dart';
 import 'package:ehoa/app/service/social_login_functions.dart';
@@ -31,11 +34,81 @@ class SplashController extends GetxController {
   Future<void> navigate() async {
     String? token = MySharedPref.getToken();
     if (AppService.isValidString(token)) {
-      Get.offAllNamed(AppPages.BASE);
+      Map<String, dynamic> profileMap = await ApiService()
+          .showProfile(id: (MySharedPref.getUserId().toString()));
+        print(profileMap["show_user"][0]["is_pro"]);
+      MyProfileResponse obj = MyProfileResponse.fromJson(profileMap);
+      getCmsData();
+      getCmsSinglePageData();
+      print(MySharedPref.getFcmToken());
+      if (obj.showUser?.first.name != null) {
+        MySharedPref.setEmail(obj.showUser?.first.email ?? "");
+        MySharedPref.setName(obj.showUser?.first.name ?? "");
+        MySharedPref.setPeriodDay(obj.showUser?.first.periodDay ?? "");
+        MySharedPref.setPeriodLen(
+            parseInt(obj.showUser?.first.averageCycleDays.toString()));
+        MySharedPref.setCycleLen(
+            parseInt(obj.showUser?.first.averageCycleLength.toString()));
+        debugPrint("sdlkjdsfkd");
+        MySharedPref.setProtype(obj.showUser?.first.ispro.toString() ?? " ");
+        MySharedPref.setdob(obj.showUser?.first.dob ?? "");
+        MySharedPref.setgender(obj.showUser?.first.customGender ?? "");
+        MySharedPref.setpronun(obj.showUser?.first.customPronoun ?? "");
+        MySharedPref.setheight(obj.showUser?.first.height ?? "");
+        MySharedPref.setweight(obj.showUser?.first.weight ?? "");
+        debugPrint(
+            "<<< Period day ${MySharedPref.getPeriodDay()}, PeriodLen ${MySharedPref.getPeriodLen()} ${MySharedPref.getProtype()} >>>");
+        Get.offAllNamed(AppPages.BASE);
+      } else {
+        Get.toNamed(AppPages.TNC);
+      }
     } else {
       isLoading = false;
       update();
     }
+  }
+
+
+  Future getCmsSinglePageData() async {
+    isLoading = true;
+    Map<String, dynamic> cmsdata =
+        await ApiService().showCmsSingle( Endpoints.HELP.toString());
+    if (cmsdata.isNotEmpty) {
+      CMSDetailResponse res = CMSDetailResponse.fromJson(cmsdata);
+      MySharedPref.setcmssingletitle(
+          res.showPrivacySettings?.first.title ?? "");
+      MySharedPref.setcmssingledescri(
+          res.showPrivacySettings?.first.longDescription ?? "");
+    }
+    isLoading = false;
+  }
+
+  Future getCmsData() async {
+    // isLoading = true;
+    Map<String, dynamic> cmsdata = await ApiService().showCms();
+    print(cmsdata);
+    if (cmsdata.isNotEmpty) {
+      CMSResponse response = CMSResponse.fromJson(cmsdata);
+      if (response.showCms != null) {
+        response.showCms?.cms?.forEach((element) {
+          if (element.id == 20) {
+            MySharedPref.setaboutshort(element.shortDescription.toString());
+            MySharedPref.setaboutlong(element.longDescription.toString());
+            print(element.longDescription);
+          }
+          if (element.id == 21) {
+            MySharedPref.setprivacypolicy(element.longDescription.toString());
+          }
+          if (element.id == 22) {
+            MySharedPref.settermsdata(element.longDescription.toString());
+          }
+          if (element.id == 23) {
+            MySharedPref.sethelp(element.longDescription.toString());
+          }
+        });
+      }
+    }
+    // isLoading = false;
   }
 
   @override
@@ -93,8 +166,8 @@ class SplashController extends GetxController {
       MySharedPref.setToken(res['token']);
       MySharedPref.setUserId(res['user_id'].toString());
       print("dsjfldkfjdjflds");
-      Map<String, dynamic> profileMap = await ApiService()
-          .showProfile(id: (res['user_id'].toString()));
+      Map<String, dynamic> profileMap =
+          await ApiService().showProfile(id: (res['user_id'].toString()));
       if (profileMap.isNotEmpty) {
         MyProfileResponse obj = MyProfileResponse.fromJson(profileMap);
         MySharedPref.setEmail(obj.showUser?.first.email ?? "");
@@ -104,11 +177,10 @@ class SplashController extends GetxController {
             parseInt(obj.showUser?.first.averageCycleDays.toString()));
         MySharedPref.setCycleLen(
             parseInt(obj.showUser?.first.averageCycleLength.toString()));
-            MySharedPref.setProtype(
-              parseInt(obj.showUser?.first.ispro.toString()));
+        MySharedPref.setProtype(obj.showUser?.first.ispro.toString() ?? "");
         debugPrint("sdlkjdsfkd");
         debugPrint(
-            "<<< Period day ${MySharedPref.getPeriodDay()}, PeriodLen ${MySharedPref.getPeriodLen()} >>>");
+            "<<< Period day ${MySharedPref.getPeriodDay()}, PeriodLen ${MySharedPref.getPeriodLen()} ${MySharedPref.getProtype()} >>>");
       }
       socialLoader(false);
       Get.offAllNamed(AppPages.TNC);
@@ -136,8 +208,7 @@ class SplashController extends GetxController {
             parseInt(obj.showUser?.first.averageCycleDays.toString()));
         MySharedPref.setCycleLen(
             parseInt(obj.showUser?.first.averageCycleLength.toString()));
-        MySharedPref.setProtype(
-              parseInt(obj.showUser?.first.ispro.toString()));
+        MySharedPref.setProtype(obj.showUser?.first.ispro.toString() ?? " ");
         debugPrint("dsssdlkjdsfkd");
 
         debugPrint(

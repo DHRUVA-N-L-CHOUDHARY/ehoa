@@ -1,3 +1,4 @@
+import 'package:ehoa/app/data/local/my_shared_pref.dart';
 import 'package:get/get.dart';
 
 import '../../../data/remote/api_service.dart';
@@ -11,7 +12,7 @@ class EditAgeController extends GetxController with BaseController {
   void onInit() {
     super.onInit();
     getYearsList();
-    selectedAge(Get.arguments.toString().isEmpty?"2000":Get.arguments);
+    selectedAge(Get.arguments.toString().isEmpty ? "2000" : Get.arguments);
     update();
   }
 
@@ -33,11 +34,14 @@ class EditAgeController extends GetxController with BaseController {
       "dob": selectedAge.value,
     };
     Map<String, dynamic> res = await ApiService().updateProfile(data);
+    if (res.isNotEmpty) {
+      MySharedPref.setdob(data["dob"] ?? "");
+    }
     isLoading(false);
     update();
     Future.delayed(
       const Duration(milliseconds: 500),
-      () => Get.back(result:selectedAge.value ),
+      () => Get.back(result: selectedAge.value),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:ehoa/app/data/local/my_shared_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -68,6 +69,9 @@ class EditPronounController extends GetxController with BaseController {
       'pronoun_id':selectedPronoun?.itemId,
     };
     Map<String, dynamic> res = await ApiService().updateProfile(data);
+    if (res.isNotEmpty) {
+      MySharedPref.setpronun(data["custom_pronoun"] ?? "");
+    }
     isLoading(false);
     update();
     Future.delayed(

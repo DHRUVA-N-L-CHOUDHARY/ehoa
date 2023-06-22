@@ -310,4 +310,20 @@ class ApiService extends ApiInterface {
         url: ApiInterface.baseUrl + Endpoints.existingsocialuserlogin, data: data);
     return _parseBaseResponse(res) ?? {};
   }
+   Future<Map<String,dynamic>> Saverem(status,user_id,r_id,schedu,fcmtoken) async {
+    http.Response res = await getApi(
+        url: ApiInterface.baseUrl + Endpoints.saveremin+"/"+status+"/"+user_id+"/"+r_id+"/"+schedu+"/"+fcmtoken);
+    return _parseBaseResponse(res) ?? {};
+  }
+  Future<Map<String,dynamic>> savestatus(status,user_id,r_id) async {
+    http.Response res = await getApi(
+        url: ApiInterface.baseUrl + Endpoints.savests+"/"+status+"/"+user_id+"/"+r_id);
+    return _parseBaseResponse(res) ?? {};
+  }
+  Future<Map<String,dynamic>> getrem(u_id) async {
+    http.Response res = await getApi(
+        url: ApiInterface.baseUrl + Endpoints.getrem+"/"+u_id);
+    return _parseBaseResponse(res) ?? {};
+  }
+
 }

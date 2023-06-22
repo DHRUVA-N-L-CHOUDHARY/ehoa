@@ -54,7 +54,7 @@ class LoginController extends GetxController {
           MySharedPref.setCycleLen(
               parseInt(obj.showUser?.first.averageCycleLength.toString()));
           MySharedPref.setProtype(
-              parseInt(obj.showUser?.first.ispro.toString()));
+              obj.showUser?.first.ispro.toString() ?? " ");
         }
         Get.offAllNamed(AppPages.BASE);
       }

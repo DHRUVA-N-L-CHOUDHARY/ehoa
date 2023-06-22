@@ -8,6 +8,7 @@ import 'package:ehoa/app/routes/app_pages.dart';
 import 'package:ehoa/config/theme/light_theme_colors.dart';
 import 'package:ehoa/config/theme/my_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
@@ -107,7 +108,7 @@ class MenuView extends StatelessWidget {
                 ),
               ),
               sizedBox(height: 40),
-            MySharedPref.getProtype() != 1 ?  GestureDetector(
+            MySharedPref.getProtype() != "1" ?  GestureDetector(
                 onTap: (){
                   Get.toNamed(AppPages.PAYWALL);
                 },
@@ -117,7 +118,7 @@ class MenuView extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(25.w))),
                   child: Padding(
-                          padding: const EdgeInsets.all(20.0).w,
+                          padding: const EdgeInsets.all(20.0). w,
                     child: Center(
                       child: subHeadingText("Upgrade to Premium",
                           color: Colors.black, fontSize: 24.sp),
@@ -131,7 +132,7 @@ class MenuView extends StatelessWidget {
                 keyIcon: AppIcons.kRepSysIcon,
                 showTopBorder: true,
                 onTap: () {
-                  MySharedPref.getProtype() != 1 ?
+                  MySharedPref.getProtype() != "1" ?
                   Get.toNamed(AppPages.REPORTING_SYSTEM) : Get.toNamed(AppPages.REPORTING_SYSTEM);
                 },
               ),
@@ -152,6 +153,9 @@ class MenuView extends StatelessWidget {
               MyListTile(
                 keyName: Strings.shop,
                 keyIcon: AppIcons.kShopSelectedIcon,
+                onTap: (){
+                  Get.toNamed(AppPages.SHOP);
+                },
               ),
               MyListTile(
                 keyName: Strings.help,

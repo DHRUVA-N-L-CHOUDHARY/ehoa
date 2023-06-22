@@ -76,6 +76,7 @@ abstract class Routes {
   static const REPORTING_SYSTEM = _Paths.REPORTING_SYSTEM;
   static const REMAINDERS = _Paths.REMAINDERS;
   static const REMAINDERS_SET = _Paths.REMAINDERS_SET;
+  static const REMAINDERS_EDIT = _Paths.REMAINDERS_EDIT;
   static const RS_CYCLE_LEN = _Paths.RS_CYCLE_LEN;
   static const MONTHLY_MOOD = _Paths.MONTHLY_MOOD;
   static const ENERGY_GRAPH = _Paths.ENERGY_GRAPH;
@@ -169,6 +170,7 @@ abstract class _Paths {
   static const REPORTING_SYSTEM = '/reporting_system';
   static const REMAINDERS = "/remainders";
   static const REMAINDERS_SET = "/remainders_set";
+  static const REMAINDERS_EDIT = "/remainders_edit";
   static const RS_CYCLE_LEN = '/rs_cycle_len';
   static const MONTHLY_MOOD = '/monthly_mood';
   static const ENERGY_GRAPH = '/energy_graph';

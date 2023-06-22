@@ -1,3 +1,5 @@
+import 'package:ehoa/app/modules/login/controllers/login_controller.dart';
+
 class MyProfileResponse {
   List<ShowUser>? showUser;
   MyProfileResponse({this.showUser});
@@ -49,7 +51,7 @@ class ShowUser {
   var languageId;
   int? averageCycleLength;
   int? averageCycleDays;
-  int? ispro;
+  String? ispro;
   String? packageExpiryDate;
   String? periodDay;
   String? packageStartDate;
@@ -70,6 +72,7 @@ class ShowUser {
         this.status,
         this.pronounId,
         this.customPronoun,
+        this.ispro,
         this.weight,
         this.height,
         this.image,
@@ -108,6 +111,7 @@ class ShowUser {
     pronounId = json['pronoun_id'];
     customPronoun = json['custom_pronoun'];
     weight = json['weight'];
+    ispro = json["is_pro"].toString();
     height = json['height'];
     image = json['image'];
     description = json['description'];
@@ -155,6 +159,7 @@ class ShowUser {
     data['group_id'] = this.groupId;
     data['custom_group'] = this.customGroup;
     data['is_term'] = this.isTerm;
+    data['is_pro'] = parseInt(this.ispro);
     data['is_understand'] = this.isUnderstand;
     data['data_security_accepted'] = this.dataSecurityAccepted;
     data['is_social'] = this.isSocial;

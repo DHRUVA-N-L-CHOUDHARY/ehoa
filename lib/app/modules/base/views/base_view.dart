@@ -3,6 +3,7 @@
 import 'package:ehoa/app/components/Unlock_premium.dart';
 import 'package:ehoa/app/data/local/my_shared_pref.dart';
 import 'package:ehoa/app/routes/app_pages.dart';
+import 'package:ehoa/app/routes/app_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -23,21 +24,22 @@ class BaseView extends StatelessWidget {
           ),
           child: Scaffold(
               appBar: AppBar(
-                toolbarHeight: (MySharedPref.getProtype() != 1 &&
+                toolbarHeight: (c.ispo != "1" &&
                         (c.selectedIndex == BottomBarSelection.symptoms ||
                             c.selectedIndex == BottomBarSelection.empower))
-                    ? MediaQuery.of(context).size.height * 0.025
-                    : 0.h,
+                    ? MediaQuery.of(AppService.getContext()).size.height * 0.035
+                    : 0,
                 backgroundColor: Colors.transparent,
+                automaticallyImplyLeading: false,
               ),
-              extendBodyBehindAppBar: (MySharedPref.getProtype() != 1 &&
+              extendBodyBehindAppBar: (c.ispo != "1" &&
                       (c.selectedIndex == BottomBarSelection.symptoms ||
                           c.selectedIndex == BottomBarSelection.empower))
                   ? false
                   : true,
               extendBody: true,
               backgroundColor: Colors.transparent,
-              body: MySharedPref.getProtype() != 1
+              body: c.ispo != "1"
                   ? c.selectedIndex == BottomBarSelection.symptoms
                       ? UnlockPremium(
                           close: () {
@@ -62,7 +64,7 @@ class BaseView extends StatelessWidget {
                       initialRoute: AppPages.CALENDAR, //profileRoute,
                       onGenerateRoute: c.onGenerateRoute,
                     ),
-              bottomNavigationBar: (MySharedPref.getProtype() != 1 &&
+              bottomNavigationBar: (c.ispo != "1" &&
                       (c.selectedIndex == BottomBarSelection.symptoms ||
                           c.selectedIndex == BottomBarSelection.empower))
                   ? Container()

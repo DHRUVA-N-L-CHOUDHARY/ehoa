@@ -61,9 +61,9 @@ class PeriodCalendarController extends GetxController with BaseController {
     }
   }
 
-  String getMoonByDay(int day) {
+  String getMoonByDay(DateTime day) {
     int idx = calC.moonList1.indexWhere((element) {
-      return element.date!.day == day;
+      return element.date!.day == day.day;
     });
 
     if (idx != -1) {
@@ -139,15 +139,25 @@ class PeriodCalendarController extends GetxController with BaseController {
     // }
   }
 
-  int getEnergyColor(int day) {
+  int getEnergyColor(DateTime day) {
     int idx = calC.moonList1.indexWhere((element) {
-      return element.date!.day == day;
+      return element.date!.day == day.day && element.date!.month == day.month;
     });
-
-    if (idx != -1) {
+    int idx1 = calC.moonList2.indexWhere((element) {
+        return element.date!.day == day.day && element.date!.month == day.month;
+      });
+    int idx2 = calC.moonList3.indexWhere((element) {
+        return element.date!.day == day.day && element.date!.month == day.month;
+      });
+    if (idx != -1 || idx1 != -1 || idx2 != -1) {
+        if(idx != -1)
       return calC.moonList1[idx].energy!.energyColor!;
+      else if(idx1 != -1)
+      return calC.moonList2[idx1].energy!.energyColor!;
+      else
+      return calC.moonList3[idx2].energy!.energyColor!;
     } else {
-      return 0xff000000;
+      return 0xff46597c;
     }
     // int energy = m.Random().nextInt(6);
     // if (day == 1) {
@@ -217,14 +227,24 @@ class PeriodCalendarController extends GetxController with BaseController {
     // }
   }
 
-  getSelected(int day) {
+  getSelected(DateTime day) {
     try {
       int idx = calC.moonList1.indexWhere((element) {
-        return element.date!.day == day;
+        return element.date!.day == day.day && element.date!.month == day.month;
       });
-
-      if (idx != -1) {
+      int idx1 = calC.moonList2.indexWhere((element) {
+        return element.date!.day == day.day && element.date!.month == day.month;
+      });
+      int idx2 = calC.moonList3.indexWhere((element) {
+        return element.date!.day == day.day && element.date!.month == day.month;
+      });
+      if (idx != -1 || idx1 != -1 || idx2 != -1) {
+        if(idx != -1)
         return calC.moonList1[idx].isSelected;
+        else if(idx1 != -1)
+        return calC.moonList2[idx1].isSelected;
+        else
+        return calC.moonList3[idx2].isSelected;
       } else {
         return false;
       }
@@ -233,8 +253,8 @@ class PeriodCalendarController extends GetxController with BaseController {
     }
   }
 
-  getIsToday(int day) {
-    return DateTime.now().day == day;
+  getIsToday(DateTime day) {
+    return DateTime.now().day == day.day && DateTime.now().month == day.month;
   }
 }
 

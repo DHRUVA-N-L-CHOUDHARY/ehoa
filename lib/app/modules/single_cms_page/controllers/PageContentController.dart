@@ -1,18 +1,19 @@
 import 'package:ehoa/app/data/apiModels/CMSDetailResponse.dart';
+import 'package:ehoa/app/data/local/my_shared_pref.dart';
 import 'package:get/get.dart';
 
 import '../../../data/remote/api_service.dart';
 import '../../../service/base_controller.dart';
 
 class PageContentController extends GetxController with BaseController {
-  RxString title = "".obs;
-  RxString description = "".obs;
+  RxString title = MySharedPref.getcmssingletitle().toString().obs;
+  RxString description =MySharedPref.getsingledescri().toString().obs;
 
   RxBool isLoading = false.obs;
 
   @override
   void onInit() {
-    getCmsData();
+    // getCmsData();
     super.onInit();
   }
 

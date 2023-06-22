@@ -34,7 +34,7 @@ class SymptomsController extends GetxController with BaseController {
     init();
   }
 
-  int? is_pro;
+  String? is_pro;
 
   Future<void> init() async {
     menstrualFlow = List.empty();

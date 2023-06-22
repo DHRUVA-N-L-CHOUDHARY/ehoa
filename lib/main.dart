@@ -1,5 +1,6 @@
 // ignore_for_file: unused_local_variable
 import 'package:ehoa/app/service/user_onboarding_controller.dart';
+import 'package:ehoa/utils/fcm_helper.dart';
 import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -50,7 +51,7 @@ Future<void> main() async {
 
   await MySharedPref.init();
 
-  // await FcmHelper.initFcm();
+  await FcmHelper.initFcm();
 
   runApp(
     ScreenUtilInit(

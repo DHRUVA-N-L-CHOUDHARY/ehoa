@@ -11,17 +11,17 @@ class ProfileController extends GetxController with BaseController {
   List<int> days = List.empty(growable: true);
   RxString selectCycle = "".obs;
   RxString selectedPeriod = "".obs;
-  RxString selectedPeriodDate = "".obs;
-  RxString avgCycle = "".obs;
-  RxString periodLength = "".obs;
+  RxString selectedPeriodDate = MySharedPref.getPeriodDay().toString().obs;
+  RxString avgCycle =MySharedPref.getCycleLen().toString().obs;
+  RxString periodLength =MySharedPref.getPeriodLen().toString().obs;
   RxString ovulateOnDay = "".obs;
-  RxString userName = "".obs;
-  RxString email = "".obs;
-  RxString age = "".obs;
-  RxString weight = "".obs;
-  RxString height = "".obs;
-  RxString gender = "".obs;
-  RxString pronoun = "".obs;
+  RxString userName = MySharedPref.getName().toString().obs;
+  RxString email = MySharedPref.getEmail().obs;
+  RxString age = MySharedPref.getdob().toString().obs;
+  RxString weight = MySharedPref.getweight().toString().obs;
+  RxString height = MySharedPref.getheight().toString() .obs;
+  RxString gender = MySharedPref.getgender().toString().obs;
+  RxString pronoun = MySharedPref.getpronoun().toString() .obs;
   RxString ovulateDay = "".obs;
   RxBool isLoading = false.obs;
 

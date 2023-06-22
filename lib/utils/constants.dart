@@ -108,6 +108,7 @@ class AppImages {
   static String get unlockpremi => "assets/images/unlock_premi.png";
   static String get hexgraph => "assets/images/hex_graph.png";
   static String get curvedmoonicon => 'assets/images/moon_icon.png';
+
 }
 
 class AppIcons {

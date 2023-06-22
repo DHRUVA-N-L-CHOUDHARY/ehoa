@@ -5,12 +5,10 @@ import 'package:ehoa/app/components/common/app_utils.dart';
 import 'package:ehoa/app/components/headings.dart';
 import 'package:ehoa/app/components/list_selection_tile.dart';
 import 'package:ehoa/app/components/sizedbox_util.dart';
-import 'package:ehoa/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:spring/spring.dart';
-
 import '../../../../config/theme/my_styles.dart';
 import '../../../../config/translations/strings_enum.dart';
 import '../../../../utils/constants.dart';

@@ -1,4 +1,5 @@
 import 'package:ehoa/app/components/navbar/bottom_navbar.dart';
+import 'package:ehoa/app/data/local/my_shared_pref.dart';
 import 'package:ehoa/app/modules/empower/bindings/empower_binding.dart';
 import 'package:ehoa/app/modules/empower/controllers/empower_controller.dart';
 import 'package:ehoa/app/modules/empower/views/empower_view.dart';
@@ -98,9 +99,12 @@ class BaseControlller extends GetxController {
     return null;
   }
 
+  String ispo = MySharedPref.getProtype().toString();
+
   @override
   void onInit() {
     super.onInit();
+      print("----------------${MySharedPref.getProtype()}");
     update();
   }
 }

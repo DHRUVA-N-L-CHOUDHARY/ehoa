@@ -40,12 +40,16 @@ import 'package:ehoa/app/modules/post_animation/view/post_animation_view.dart';
 import 'package:ehoa/app/modules/privacy_setting/views/privacy_setting_view.dart';
 import 'package:ehoa/app/modules/remainders/bindings/remainders_binding.dart';
 import 'package:ehoa/app/modules/remainders/views/remainders_view.dart';
+import 'package:ehoa/app/modules/remainders_set/binding/edit_remainders_set_binding.dart';
 import 'package:ehoa/app/modules/remainders_set/binding/remainders_set_binding.dart';
+import 'package:ehoa/app/modules/remainders_set/views/remainder_time_set_view.dart';
 import 'package:ehoa/app/modules/remainders_set/views/remainders_set_view.dart';
 import 'package:ehoa/app/modules/reporting_system/bindings/reporting_system_bindings.dart';
 import 'package:ehoa/app/modules/reporting_system/views/reporting_system_view.dart';
 import 'package:ehoa/app/modules/settings/bindings/settings_binding.dart';
 import 'package:ehoa/app/modules/settings/views/settings_view.dart';
+import 'package:ehoa/app/modules/shop/bindings/shop_binding.dart';
+import 'package:ehoa/app/modules/shop/views/shop_view.dart';
 import 'package:ehoa/app/modules/single_cms_page/bindings/PageContentBinding.dart';
 import 'package:ehoa/app/modules/single_cms_page/views/page_content_view.dart';
 import 'package:ehoa/app/modules/splash/bindings/splash_binding.dart';
@@ -186,6 +190,7 @@ class AppPages {
   static const REPORTING_SYSTEM = Routes.REPORTING_SYSTEM;
   static const REMAINDERS = Routes.REMAINDERS;
   static const REMAINDERS_SET = Routes.REMAINDERS_SET;
+  static const REMAINDERS_EDIT = Routes.REMAINDERS_EDIT;
   static const RS_CYCLE_LEN = Routes.RS_CYCLE_LEN;
   static const MONTHLY_MOOD = Routes.MONTHLY_MOOD;
   static const ENERGY_GRAPH = Routes.ENERGY_GRAPH;
@@ -245,7 +250,11 @@ class AppPages {
       page: () => const LocationView(),
       binding: LocationBinding(),
     ),
-
+    GetPage(
+      name: _Paths.REMAINDERS_EDIT,
+      page: () => EditRemainderView(),
+      binding: EditRemaindersSetBinding()
+    ),
     GetPage(
       name: _Paths.LOCATION_COUNTY,
       page: () => const LocationCountyView(),
@@ -255,6 +264,11 @@ class AppPages {
       name: _Paths.LOCATION_TRIBE,
       page: () => const LocationTribeView(),
       //binding: LocationBinding(),
+    ),
+    GetPage(
+      name: _Paths.SHOP,
+      page: () => const ShopView(),
+      binding: ShopBinding()
     ),
     GetPage(
       name: _Paths.NAME,

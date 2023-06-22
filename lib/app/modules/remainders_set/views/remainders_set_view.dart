@@ -1,6 +1,8 @@
 import 'package:ehoa/app/components/app_bar.dart';
+import 'package:ehoa/app/components/common/app_utils.dart';
 import 'package:ehoa/app/components/my_icon_button.dart';
 import 'package:ehoa/app/components/sizedbox_util.dart';
+import 'package:ehoa/app/modules/login/controllers/login_controller.dart';
 import 'package:ehoa/app/modules/menu/views/menu_view.dart';
 import 'package:ehoa/app/modules/remainders_set/controllers/remainders_set_controller.dart';
 import 'package:ehoa/app/routes/app_pages.dart';
@@ -24,7 +26,7 @@ class RemaindersSetView extends StatelessWidget {
           leading: [
             MyIconButton(
                 onTap: () {
-                  Get.back();
+                  Get.offNamed(AppPages.REMAINDERS);
                 },
                 isSvg: true,
                 icon: AppIcons.kBackArrowIcon),
@@ -40,28 +42,29 @@ class RemaindersSetView extends StatelessWidget {
           ],
         ),
         backgroundColor: Color.fromRGBO(7, 42, 67, 0.8),
-        body: Column(
+        body: baseBody(c.isLoading.value,Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             sizedBox(height: 40.h),
-            CustomSwitcher(context,c.data),
+            CustomSwitcher(context, c.data),
             MyListTile(
               keyName: Strings.sendnotifat,
               onTap: () {
-                Get.toNamed(AppPages.PRIVACY_SETTINGS);
+                Get.toNamed(AppPages.REMAINDERS_EDIT,
+                    arguments: {"data": c.data});
               },
-              valueName: "10am",
+              valueName: "${c.time}:00 Hrs",
             ),
           ],
         ),
+        )
       );
     });
   }
 
   Widget CustomSwitcher(BuildContext context, String data) {
-    return InkWell(
-      onTap: () {},
-      child: Container(
+    return GetBuilder<RemaindersSetController>(builder: (c) {
+      return Container(
         padding:
             MyPadding.getFixedHorizontalAndDynamicVerticalInsets(vertical: 14),
         decoration: BoxDecoration(
@@ -90,8 +93,11 @@ class RemaindersSetView extends StatelessWidget {
                   child: ToggleSwitch(
                     minWidth: 30.0,
                     minHeight: 25.0,
-                    initialLabelIndex: 0,
+                    initialLabelIndex: parseInt(c.status),
                     cornerRadius: 20.0,
+                    onToggle: (index) {
+                      c.saveProfile(index.toString());
+                    },
                     // activeFgColor: Colors.white,
                     activeBgColor: const [Colors.white],
                     inactiveBgColor: Colors.transparent,
@@ -105,7 +111,7 @@ class RemaindersSetView extends StatelessWidget {
             )
           ],
         ),
-      ),
-    );
+      );
+    });
   }
 }

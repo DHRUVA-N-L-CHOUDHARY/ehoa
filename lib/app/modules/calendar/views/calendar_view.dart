@@ -31,7 +31,6 @@ class CalendarView extends StatelessWidget {
       return Scaffold(
         extendBodyBehindAppBar: true,
         extendBody: true,
-
         //appBar:
         backgroundColor: LightThemeColors.primaryColor,
         body: baseBody(
@@ -41,13 +40,11 @@ class CalendarView extends StatelessWidget {
               ListView(
                 children: [
                   Container(
-                      height:
-                          (MediaQuery.of(AppService.getContext()).size.height -
-                                  MediaQuery.of(AppService.getContext())
-                                          .size
-                                          .height /
-                                      13)
-                              .h,
+                      height: (MediaQuery.of(AppService.getContext())
+                              .size
+                              .height -
+                          MediaQuery.of(AppService.getContext()).size.height /
+                              13),
                       width: double.infinity,
                       decoration: BoxDecoration(
                           image: DecorationImage(
@@ -60,40 +57,47 @@ class CalendarView extends StatelessWidget {
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          Positioned(
-                            top: MediaQuery.of(AppService.getContext())
-                                    .size
-                                    .height *
-                                0.07,
-                            //  left: MediaQuery.of(AppService.getContext()).size.width*0.25,
-                            child:
-                                Center(child: headingText(Strings.cycleName)),
-                          ),
+                          // Positioned(
+                          //   top: MediaQuery.of(AppService.getContext())
+                          //           .size
+                          //           .height *
+                          //       0.07,
+                          //   //  left: MediaQuery.of(AppService.getContext()).size.width*0.25,
+                          //   child:
+                          // Center(child: headingText(Strings.cycleName)),
+                          // ),
                           if (c.zoomAnimationController.animationModel != null)
                             Positioned(
                                 top: MediaQuery.of(AppService.getContext())
                                         .size
                                         .height *
-                                    0.38,
+                                    0.23,
                                 child: Image.asset(
                                   AppImages.bkgellipse,
-                                  width: 380.w,
+                                  width: MediaQuery.of(AppService.getContext())
+                                          .size
+                                          .width *
+                                      1.1,
                                 )),
                           if (c.zoomAnimationController.animationModel != null)
                             Positioned(
+                                right: 1,
                                 top: MediaQuery.of(AppService.getContext())
                                         .size
                                         .height *
-                                    0.39,
+                                    0.37,
                                 child: Image.asset(
                                   AppImages.bkgmoons,
-                                  width: 380.w,
+                                  width: MediaQuery.of(AppService.getContext())
+                                          .size
+                                          .width *
+                                      1.025,
                                 )),
                           Positioned(
                               top: MediaQuery.of(AppService.getContext())
                                       .size
                                       .height *
-                                  0.19,
+                                  0.12,
                               child: GestureDetector(
                                   onTap: () {
                                     Get.offNamed(AppPages.HOME_ANIMATION);
@@ -105,7 +109,11 @@ class CalendarView extends StatelessWidget {
                                                 .animationModel?.assetcurt[3] ??
                                             ""
                                         : AppImages.smapleEnergyGraphic ?? "",
-                                    width: 340.w,
+                                    width:
+                                        MediaQuery.of(AppService.getContext())
+                                                .size
+                                                .width *
+                                            0.90,
                                   ))),
                           Positioned(
                               top: MediaQuery.of(AppService.getContext())
@@ -114,13 +122,14 @@ class CalendarView extends StatelessWidget {
                                   0.68,
                               child: Column(
                                 children: [
-                                  subHeadingText(Strings.periodStartsIn),
+                                  subHeadingText(Strings.periodStartsIn,
+                                      fontSize: 17.spMax),
                                   sizedBox(height: 8),
                                   Text(
                                     c.periodStartsIn + " Days",
                                     style: MyStyles.getTextStyle(
                                         fontFamily: AppFonts.kInterSemibold,
-                                        fontSize: 48),
+                                        fontSize: 48.spMax),
                                   ),
                                   sizedBox(height: 28),
                                   InkWell(
@@ -136,8 +145,8 @@ class CalendarView extends StatelessWidget {
                                             BorderRadius.circular(50.r),
                                       ),
                                       child: Center(
-                                        child:
-                                            subHeadingText(Strings.logPeriod),
+                                        child: subHeadingText(Strings.logPeriod,
+                                            fontSize: 17.spMax),
                                       ),
                                     ),
                                   ),
@@ -214,107 +223,117 @@ class CalendarView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 12.h, horizontal: 16.w),
-                            height: 62.h,
-                            decoration: c.logs.isEmpty
-                                ? DottedDecoration(
-                                    borderRadius: BorderRadius.circular(16.r),
-                                    shape: Shape.box,
-                                    color: LightThemeColors.white90)
-                                : MyDecoration.getGlassDecoration(),
-                            child: c.logs.isEmpty
-                                ? Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      subHeadingText(Strings.logTodaysSymptoms),
-                                      InkWell(
+                        c.baseVM.ispo == "1"
+                            ? Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 12.h, horizontal: 16.w),
+                                height: 62.h,
+                                decoration: c.logs.isEmpty
+                                    ? DottedDecoration(
                                         borderRadius:
-                                            BorderRadius.circular(100.r),
-                                        onTap: () {
-                                          //? sdjkfsdlk
-                                          c.baseVM.changePage(
-                                              BottomBarSelection.symptoms);
-                                          c.baseVM.update();
-                                        },
-                                        child: Container(
-                                          width: 28.5.w,
-                                          height: 28.5.h,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.r),
-                                              border: Border.all(
-                                                  color: LightThemeColors
-                                                      .white90)),
-                                          child: const Center(
-                                              child: Icon(
-                                            Icons.add,
-                                            color: LightThemeColors.white90,
-                                          )),
-                                        ),
+                                            BorderRadius.circular(16.r),
+                                        shape: Shape.box,
+                                        color: LightThemeColors.white90)
+                                    : MyDecoration.getGlassDecoration(),
+                                child: c.logs.isEmpty
+                                    ? Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          subHeadingText(
+                                              Strings.logTodaysSymptoms),
+                                          InkWell(
+                                            borderRadius:
+                                                BorderRadius.circular(100.r),
+                                            onTap: () {
+                                              //? sdjkfsdlk
+                                              c.baseVM.changePage(
+                                                  BottomBarSelection.symptoms);
+                                              c.baseVM.update();
+                                            },
+                                            child: Container(
+                                              width: 28.5.w,
+                                              height: 28.5.h,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          100.r),
+                                                  border: Border.all(
+                                                      color: LightThemeColors
+                                                          .white90)),
+                                              child: const Center(
+                                                  child: Icon(
+                                                Icons.add,
+                                                color: LightThemeColors.white90,
+                                              )),
+                                            ),
+                                          )
+                                        ],
                                       )
-                                    ],
-                                  )
-                                : Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Row(
-                                            children: List.generate(
-                                                c.logs.length, (index) {
-                                              return Container(
-                                                margin: EdgeInsets.only(
-                                                    right: 20.w),
-                                                child: SvgPicture.asset(
-                                                  c.logs[index].icon!,
-                                                  width: 21.w,
-                                                  height: 21.h,
-                                                ),
-                                              );
-                                            }),
+                                    : Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            child: SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: Row(
+                                                children: List.generate(
+                                                    c.logs.length, (index) {
+                                                  return Container(
+                                                    margin: EdgeInsets.only(
+                                                        right: 20.w),
+                                                    child: SvgPicture.asset(
+                                                      c.logs[index].icon!,
+                                                      width: 21.w,
+                                                      height: 21.h,
+                                                    ),
+                                                  );
+                                                }),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                      InkWell(
-                                        borderRadius:
-                                            BorderRadius.circular(100.r),
-                                        onTap: () {
-                                          c.baseVM.changePage(
-                                              BottomBarSelection.symptoms);
-                                          c.baseVM.update();
-                                        },
-                                        child: Container(
-                                          width: 28.5.w,
-                                          height: 28.5.h,
-                                          decoration: BoxDecoration(
-                                              color: LightThemeColors.white90,
-                                              borderRadius:
-                                                  BorderRadius.circular(100.r),
-                                              border: Border.all(
-                                                  color: LightThemeColors
-                                                      .white90)),
-                                          child: const Center(
-                                              child: Icon(
-                                            Icons.add,
-                                            color:
-                                                LightThemeColors.primaryColor,
-                                          )),
-                                        ),
-                                      )
-                                    ],
-                                  )),
-                        sizedBox(height: 12),
-                        Center(child: subHeadingText(Strings.symptomsOfDay)),
-                        sizedBox(height: 90.h),
-                        subHeadingText(
-                            "${Strings.currCycle}: ${c.curdif} days",
+                                          InkWell(
+                                            borderRadius:
+                                                BorderRadius.circular(100.r),
+                                            onTap: () {
+                                              c.baseVM.changePage(
+                                                  BottomBarSelection.symptoms);
+                                              c.baseVM.update();
+                                            },
+                                            child: Container(
+                                              width: 28.5.w,
+                                              height: 28.5.h,
+                                              decoration: BoxDecoration(
+                                                  color:
+                                                      LightThemeColors.white90,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          100.r),
+                                                  border: Border.all(
+                                                      color: LightThemeColors
+                                                          .white90)),
+                                              child: const Center(
+                                                  child: Icon(
+                                                Icons.add,
+                                                color: LightThemeColors
+                                                    .primaryColor,
+                                              )),
+                                            ),
+                                          )
+                                        ],
+                                      ))
+                            : Container(),
+
+                        sizedBox(height: c.baseVM.ispo == "1" ? 12.h : 0),
+                        c.baseVM.ispo == "1"
+                            ? Center(
+                                child: subHeadingText(Strings.symptomsOfDay))
+                            : Container(),
+                        sizedBox(height: c.baseVM.ispo == "1" ? 90.h : 0),
+                        subHeadingText("${Strings.currCycle}: ${c.curdif} days",
                             fontSize: 18),
                         Text(
                           "${c.currentmonthstart} - ${c.currentmonthend}",
@@ -429,7 +448,8 @@ class CalendarView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              subHeadingText("${c.pprevdif} days", fontSize: 18),
+                              subHeadingText("${c.pprevdif} days",
+                                  fontSize: 18),
                               Text(
                                 "${c.ppmonthstart} - ${c.ppmonthend}",
                                 style: MyStyles.getTextStyle(
@@ -471,7 +491,7 @@ class CalendarView extends StatelessWidget {
                             child: subHeadingText(Strings.feelingThisCycle,
                                 fontSize: 16)),
                         sizedBox(height: 48),
-                        !c.showGraph
+                        c.baseVM.ispo != "1"
                             ? Container(
                                 decoration: BoxDecoration(
                                     color: Colors.white10,
@@ -652,11 +672,11 @@ class CalendarView extends StatelessWidget {
                                 ),
                               ),
                         sizedBox(height: 48),
-                        SeeReportButton(
-                          onTap: () {},
-                          text: Strings.seeThisMonthRepo,
-                        ),
-                        sizedBox(height: 100)
+                        // SeeReportButton(
+                        //   onTap: () {},
+                        //   text: Strings.seeThisMonthRepo,
+                        // ),
+                        // sizedBox(height: 100)
                       ],
                     ),
                   )

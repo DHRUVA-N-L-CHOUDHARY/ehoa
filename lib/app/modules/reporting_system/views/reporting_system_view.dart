@@ -30,7 +30,7 @@ class ReportingSystemView extends StatelessWidget {
                 fit: BoxFit.fill, image: AssetImage(AppImages.gradBkgPng)),
           ),
           child: Scaffold(
-              appBar: MySharedPref.getProtype() != 1 ? AppBar(
+              appBar: MySharedPref.getProtype() != "1" ? AppBar(
                 backgroundColor: Colors.transparent,
                 automaticallyImplyLeading: false,
                 toolbarHeight: 75.h,
@@ -54,7 +54,7 @@ class ReportingSystemView extends StatelessWidget {
                 ],
               ),
               backgroundColor: Colors.transparent,
-              body: MySharedPref.getProtype() != 1
+              body: MySharedPref.getProtype() != "1"
                   ? UnlockPremium(
                       close: () {
                         Get.back();

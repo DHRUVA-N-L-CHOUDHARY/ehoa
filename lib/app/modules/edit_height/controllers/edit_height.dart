@@ -1,3 +1,4 @@
+import 'package:ehoa/app/data/local/my_shared_pref.dart';
 import 'package:get/get.dart';
 
 import '../../../data/remote/api_service.dart';
@@ -55,6 +56,9 @@ class EditHeightController extends GetxController with BaseController {
       "height": '$selectedMeter.$selectedCM',
     };
     Map<String, dynamic> res = await ApiService().updateProfile(data);
+    if (res.isNotEmpty) {
+     MySharedPref.setheight(data["height"] ?? "");
+    }
     isLoading(false);
     update();
     Future.delayed(

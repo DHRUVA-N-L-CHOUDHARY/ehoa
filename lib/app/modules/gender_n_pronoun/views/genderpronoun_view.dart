@@ -109,10 +109,8 @@ class GenderNPronounView extends StatelessWidget {
                        await  Get.toNamed(AppPages.PRONOUN);
                         if (c.pronounCtlr.text.isNotEmpty) {
                           c.selectedPronoun= DataList(itemName: c.pronounCtlr.text);
-
                         }
                        c.update();
-
                       },
                       child: FieldDecorator(
                         child: child(c.selectedPronoun, Strings.selectPronoun.tr),
@@ -124,10 +122,8 @@ class GenderNPronounView extends StatelessWidget {
                             await Get.toNamed(AppPages.GENDER);
                             if (c.genderCtlr.text.isNotEmpty) {
                               c.selectedGender= DataList(itemName: c.genderCtlr.text);
-
                             }
                             c.update();
-
                       },
                       child: FieldDecorator(
                         child: child(c.selectedGender, Strings.selectGender.tr),

@@ -57,7 +57,6 @@ class PronounView extends StatelessWidget {
                       element.setIsSelected = false.obs;
                     });
                     c.update();
-
                   },
                   margin: EdgeInsets.symmetric(horizontal: 24.w),
                 )

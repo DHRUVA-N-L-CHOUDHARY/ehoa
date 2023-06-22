@@ -2,12 +2,12 @@ import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:ehoa/app/components/headings.dart';
 import 'package:ehoa/app/components/page_indicator.dart';
 import 'package:ehoa/app/components/sizedbox_util.dart';
+import 'package:ehoa/app/routes/app_pages.dart';
 import 'package:ehoa/app/routes/app_service.dart';
 import 'package:ehoa/utils/constants.dart';
 import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../config/theme/light_theme_colors.dart';
@@ -26,18 +26,21 @@ class ViewPagerView extends StatelessWidget {
           appBar: AppBar(
               backgroundColor: Colors.transparent,
               leading: InkWell(
-                onTap: ontap,
-                child: Padding(
-                 padding: EdgeInsets.symmetric(horizontal: 22.w),
-                  child: Image.asset(AppImages.curvedmoonicon, color: Colors.white,),
-                )),
+                  onTap: ontap,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 22.w),
+                    child: Image.asset(
+                      AppImages.curvedmoonicon,
+                      color: Colors.white,
+                    ),
+                  )),
               actions: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 22.w),
                   child: InkWell(
                     onTap: () {
-                      Get.back();
-                      Get.back();
+                      Get.toNamed(AppPages.EMPOWER);
+                      // Get.back();
                       // c.empowerCtrl.changePage(EmpowerSelection.dailyRitDetails);
                     },
                     child: const Icon(
@@ -94,8 +97,9 @@ class ViewPagerView extends StatelessWidget {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      Get.back();
-                                      Get.back();
+                                      // Get.back();
+                                      // Get.back();
+                                      Get.offNamed(AppPages.BASE);
                                       // c.empowerCtrl
                                       //     .changePage(EmpowerSelection.dailyRitDetails);
                                     },
@@ -147,12 +151,17 @@ class ViewPagerView extends StatelessWidget {
                                           Padding(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 22.w),
-                                            child: c.pageList[index].title!.isEmpty ? Container() : headingText(
-                                                c.pageList[index].title,
-                                                color: LightThemeColors
-                                                    .tabSelectedColor100),
+                                            child: c.pageList[index].title!
+                                                    .isEmpty
+                                                ? Container()
+                                                : headingText(
+                                                    c.pageList[index].title,
+                                                    color: LightThemeColors
+                                                        .tabSelectedColor100),
                                           ),
-                                          c.pageList[index].title!.isEmpty ? Container() : sizedBox(height: 16),
+                                          c.pageList[index].title!.isEmpty
+                                              ? Container()
+                                              : sizedBox(height: 16),
                                           Padding(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 22.w),
@@ -164,20 +173,28 @@ class ViewPagerView extends StatelessWidget {
                                           sizedBox(height: 10),
                                           Expanded(
                                               child: Container(
-                                                margin: EdgeInsets.symmetric(horizontal: 3.w),
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 3.w),
                                             child: c.pageList[index].image!
                                                     .isEmpty
                                                 ? Container()
-                                                : !c.pageList[index].image.toString().contains("assets/") ? FastCachedImage(
-                                                  url: 
-                                                    c.pageList[index].image!,
-                                                    fit: BoxFit.cover,
-                                                   gaplessPlayback: true, 
-                                                   colorBlendMode: BlendMode.difference,
-                                                  ) : Image.asset(
-                                                    c.pageList[index].image!,
-                                                    fit: BoxFit.cover,
-                                                  ),
+                                                : !c.pageList[index].image
+                                                        .toString()
+                                                        .contains("assets/")
+                                                    ? FastCachedImage(
+                                                        url: c.pageList[index]
+                                                            .image!,
+                                                        fit: BoxFit.cover,
+                                                        gaplessPlayback: true,
+                                                        colorBlendMode:
+                                                            BlendMode
+                                                                .difference,
+                                                      )
+                                                    : Image.asset(
+                                                        c.pageList[index]
+                                                            .image!,
+                                                        fit: BoxFit.cover,
+                                                      ),
                                           ))
                                         ],
                                       );

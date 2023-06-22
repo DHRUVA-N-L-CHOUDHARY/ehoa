@@ -26,12 +26,12 @@ class HomeAnimationView extends StatelessWidget {
           children: [
             Positioned(
               child: GestureDetector(
-                onDoubleTap: (){
+                onDoubleTap: () {
                   Get.offNamed(AppPages.ZOOM_ANIMATION);
                 },
                 child: Container(
                   height:
-                      (MediaQuery.of(AppService.getContext()).size.height).h,
+                      (MediaQuery.of(AppService.getContext()).size.height),
                   width: double.infinity,
                   decoration: BoxDecoration(
                       image: DecorationImage(
@@ -41,14 +41,8 @@ class HomeAnimationView extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(AppService.getContext()).size.height * 0.1,
-              //  left: MediaQuery.of(AppService.getContext()).size.width*0.25,
-              child: Center(
-                  child: subHeadingText(Strings.iamfeeling, fontSize: 18)),
-            ),
-            Positioned(
                 top: MediaQuery.of(AppService.getContext()).size.height * 0.15,
-                child: SizedBox(width: 500.w, child: AnimWidget())),
+                child: SizedBox(width: 1.2* MediaQuery.of(AppService.getContext()).size.height, child: AnimWidget())),
           ],
         ),
       );

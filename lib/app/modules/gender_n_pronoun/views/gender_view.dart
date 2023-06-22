@@ -2,7 +2,6 @@ import 'package:ehoa/app/components/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import '../../../../config/translations/strings_enum.dart';
 import '../../../../utils/constants.dart';
 import '../../../components/app_outlined_btn.dart';
@@ -58,7 +57,6 @@ class GenderView extends StatelessWidget {
                       element.setIsSelected = false.obs;
                     });
                     c.update();
-
                   },
                   margin: EdgeInsets.symmetric(horizontal: 24.w),
                 )

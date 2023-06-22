@@ -1,7 +1,8 @@
 import 'package:ehoa/app/components/headings.dart';
-import 'package:ehoa/app/modules/homeanimation/controller/home_animation_controller.dart';
+import 'package:ehoa/app/components/sizedbox_util.dart';
 import 'package:ehoa/app/modules/zoom_animation/controllers/zoom_animation_controller.dart';
 import 'package:ehoa/app/routes/app_pages.dart';
+import 'package:ehoa/config/translations/strings_enum.dart';
 import 'package:ehoa/utils/asset_list.dart';
 import 'package:ehoa/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,11 @@ class _AnimWidgetState extends State<AnimWidget> {
   double _volumeValue = 0;
   String energy = "";
   String energydescri = "";
-  List<String> assetcurt = [AppImages.animinit,AppImages.animinit,AppImages.animinit];
+  List<String> assetcurt = [
+    AppImages.animinit,
+    AppImages.animinit,
+    AppImages.animinit
+  ];
   void onVolumeChanged(double value) {
     if (value > 0 && value <= 60) {
       value = 60;
@@ -65,7 +70,15 @@ class _AnimWidgetState extends State<AnimWidget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Center(child: headingText(energy, fontSize: 28)),
+            assetcurt[0] != AppImages.animinit
+                ? Center(
+                    child: subHeadingText(Strings.iamfeeling, fontSize: 18))
+                : Center(
+                    child:
+                        headingText(Strings.swipeenergy, fontSize: 24.spMax)),
+            assetcurt[0] != AppImages.animinit
+                ? Center(child: headingText(energy, fontSize: 28))
+                : Container(),
             Container(
               height: 520.h,
               width: 520.h,
@@ -121,12 +134,20 @@ class _AnimWidgetState extends State<AnimWidget> {
                 ],
               ),
             ),
-            AnimatedContainer(
-                duration: Duration(seconds: 1),
-                width: 300.w,
-                child: Center(
-                    child: discriptionText(energydescri,
-                        fontSize: 20, textAlign: TextAlign.center))),
+            sizedBox(height: 20.h),
+            assetcurt[0] != AppImages.animinit
+                ? AnimatedContainer(
+                    duration: Duration(seconds: 1),
+                    width: 300.w,
+                    child: Center(
+                        child: discriptionText(energydescri,
+                            fontSize: 20, textAlign: TextAlign.center)))
+                : AnimatedContainer(
+                    duration: Duration(seconds: 1),
+                    width: 300.w,
+                    child: Center(
+                        child: discriptionText(Strings.swipeenergydescri,
+                            fontSize: 20, textAlign: TextAlign.center))),
           ],
         ),
       );

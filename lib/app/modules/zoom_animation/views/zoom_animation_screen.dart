@@ -1,9 +1,11 @@
 import 'package:ehoa/app/components/Zoom_widget.dart';
+import 'package:ehoa/app/components/common/app_utils.dart';
 import 'package:ehoa/app/components/headings.dart';
 import 'package:ehoa/app/modules/zoom_animation/controllers/zoom_animation_controller.dart';
 import 'package:ehoa/app/routes/app_service.dart';
 import 'package:ehoa/config/theme/light_theme_colors.dart';
 import 'package:ehoa/config/translations/strings_enum.dart';
+import 'package:ehoa/utils/asset_list.dart';
 import 'package:ehoa/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,31 +22,33 @@ class ZoomAnimationScreen extends StatelessWidget {
         extendBodyBehindAppBar: true,
         extendBody: false,
         backgroundColor: LightThemeColors.primaryColor,
-        body: Stack(
-          alignment: Alignment.center,
-          children: [
-            Positioned(
-              child: Container(
-                height:
-                    (MediaQuery.of(AppService.getContext()).size.height).h,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(AppImages.kanimBkg),
-                        fit: BoxFit.fill)),
+        body: baseBody(
+          c.isLoading.value, Stack(
+            alignment: Alignment.center,
+            children: [
+              Positioned(
+                child: Container(
+                  height:
+                      (MediaQuery.of(AppService.getContext()).size.height),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(AppImages.kanimBkg),
+                          fit: BoxFit.fill)),
+                ),
               ),
-            ),
-            Positioned(
-              top: MediaQuery.of(AppService.getContext()).size.height * 0.1,
-              //  left: MediaQuery.of(AppService.getContext()).size.width*0.25,
-              child: Center(
-                  child: subHeadingText(Strings.iamfeeling, fontSize: 18)),
-            ),
-            Positioned(
-              top: MediaQuery.of(AppService.getContext()).size.height * 0.15,
-              child: ZoomAnimation( assetcurt: c.animationModel?.assetcurt ?? [], energydescri: c.animationModel?.energydescri ?? "", energy: c.animationModel?.energy ?? "",),
-            ),
-          ],
+              Positioned(
+                top: MediaQuery.of(AppService.getContext()).size.height * 0.1,
+                //  left: MediaQuery.of(AppService.getContext()).size.width*0.25,
+                child:   Center(
+                    child: subHeadingText(Strings.iamfeeling, fontSize: 18)) ,
+              ),
+              Positioned(
+                top: MediaQuery.of(AppService.getContext()).size.height * 0.15,
+                child: ZoomAnimation( assetcurt: c.animationModel?.assetcurt ?? [], energydescri: c.animationModel?.energydescri ?? "", energy: c.animationModel?.energy ?? "",),
+              ),
+            ],
+          ),
         ),
       );
   }

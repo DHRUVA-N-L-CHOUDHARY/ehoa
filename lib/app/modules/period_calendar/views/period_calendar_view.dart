@@ -61,7 +61,7 @@ class PeriodCalendarView extends StatelessWidget {
                   rangeSelectionMode: c.isLoggingPeriod!
                       ? RangeSelectionMode.toggledOn
                       : RangeSelectionMode.toggledOff,
-                  firstDay: DateTime.now(),
+                  firstDay: DateTime(2023),
                   focusedDay: c.selectedDateTime!,
                   lastDay: DateTime(2100),
                   headerVisible: true,
@@ -89,23 +89,23 @@ class PeriodCalendarView extends StatelessWidget {
                     },
                     defaultBuilder: (context, day, focusedDay) {
                       return CalendarCell(
-                        day: day.day,
+                        day: day,
                         c: c,
-                        isSelected: c.getSelected(day.day),
-                        isToday: c.getIsToday(day.day),
+                        isSelected: c.getSelected(day),
+                        isToday: c.getIsToday(day),
                       );
                     },
                     selectedBuilder: (context, day, focusedDay) {
                       return CalendarCell(
-                        day: day.day,
+                        day: day,
                         c: c,
                         isSelected: true,
-                        isToday: c.getIsToday(day.day),
+                        isToday: c.getIsToday(day),
                       );
                     },
                     disabledBuilder: (context, day, focusedDay) {
                       return CalendarCell(
-                        day: day.day,
+                        day: day,
                         c: c,
                         isToday: false,
                       );
@@ -115,7 +115,7 @@ class PeriodCalendarView extends StatelessWidget {
                     },
                     todayBuilder: (context, day, focusedDay) {
                       return CalendarCell(
-                        day: day.day,
+                        day: day,
                         c: c,
                         isToday: true,
                         isSelected: false,
@@ -125,21 +125,21 @@ class PeriodCalendarView extends StatelessWidget {
                     //Range
                     rangeStartBuilder: (context, day, focusedDay) {
                       return CalendarCell(
-                        day: day.day,
+                        day: day,
                         c: c,
                         isSelected: true,
                       );
                     },
                     rangeEndBuilder: (context, day, focusedDay) {
                       return CalendarCell(
-                        day: day.day,
+                        day: day,
                         c: c,
                         isSelected: true,
                       );
                     },
                     withinRangeBuilder: (context, day, focusedDay) {
                       return CalendarCell(
-                        day: day.day,
+                        day: day,
                         c: c,
                         isSelected: true,
                       );
@@ -226,7 +226,7 @@ class CalendarCell extends StatelessWidget {
 
   final bool? isSelected;
   final bool? isToday;
-  final int day;
+  final DateTime day;
   final PeriodCalendarController c;
 
   @override
@@ -253,7 +253,7 @@ class CalendarCell extends StatelessWidget {
             ),
             sizedBox(height: 7.5.h),
             Text(
-              day.toString(),
+              day.day.toString(),
               style: MyStyles.getTextStyle(
                   fontFamily: AppFonts.kInterRegular,
                   fontSize: 10,

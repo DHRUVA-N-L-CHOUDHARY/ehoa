@@ -6,8 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../config/translations/localization_service.dart';
 
 class MySharedPref {
-  
-
   // prevent making instance
   MySharedPref._();
 
@@ -28,7 +26,29 @@ class MySharedPref {
   static const String _periodLen = "periodLen";
   static const String _periodDay = "periodDay";
   static const String _cycleLen = "cycleLen";
-  static const String _ispro = "is_pro"; 
+  static const String _ispro = "is_pro";
+  static const String _height = "height";
+  static const String _year = "dob";
+  static const String _weight = "weight";
+  static const String _pronoun = "pronoun";
+  static const String _gender = "gender";
+  static const String _help = "help";
+  static const String _privacypolicy = "privacypolicy";
+  static const String _termsdata = "termsdata";
+  static const String _aboutshort = "aboutshort";
+  static const String _aboutlong = "aboutlong";
+  static const String _cmssingletitle = "cmssingletitle";
+  static const String _cmssingledescri = "cmssingledescri";
+  static const String _remlst = "remlist";
+  static const List<List<String>> _remlist = [
+    [""],
+    [""],
+    [""],
+    [""],
+    [""],
+    [""],
+    [""]
+  ];
 
   /// init get storage services
   static Future<void> init() async {
@@ -113,9 +133,71 @@ class MySharedPref {
 
   static int? getCycleLen() => _sharedPreferences.getInt(_cycleLen);
 
-  static void setProtype(int ispro) => _sharedPreferences.setInt(_ispro, ispro);
-  static int? getProtype() => _sharedPreferences.getInt(_ispro);
+  static void setProtype(String ispro) =>
+      _sharedPreferences.setString(_ispro, ispro);
+  static String? getProtype() => _sharedPreferences.getString(_ispro);
 
+  static void setdob(String year) => _sharedPreferences.setString(_year, year);
+  static String? getdob() => _sharedPreferences.getString(_year);
+
+  static void setweight(String weight) =>
+      _sharedPreferences.setString(_weight, weight);
+
+  static String? getweight() => _sharedPreferences.getString(_weight);
+
+  static void setheight(String height) =>
+      _sharedPreferences.setString(_height, height);
+
+  static String? getheight() => _sharedPreferences.getString(_height);
+
+  static void setpronun(String pronoun) =>
+      _sharedPreferences.setString(_pronoun, pronoun);
+
+  static String? getpronoun() => _sharedPreferences.getString(_pronoun);
+
+  static void setgender(String gender) =>
+      _sharedPreferences.setString(_gender, gender);
+
+  static String? getgender() => _sharedPreferences.getString(_gender);
+
+  static void sethelp(String help) => _sharedPreferences.setString(_help, help);
+
+  static String? gethelp() => _sharedPreferences.getString(_help);
+
+  static void setaboutshort(String aboutshort) =>
+      _sharedPreferences.setString(_aboutshort, aboutshort);
+
+  static String? getaboutshort() => _sharedPreferences.getString(_aboutshort);
+
+  static void setaboutlong(String aboutlong) =>
+      _sharedPreferences.setString(_aboutlong, aboutlong);
+
+  static String? getaboutlong() => _sharedPreferences.getString(_aboutlong);
+
+  static void setprivacypolicy(String privacyPolicy) =>
+      _sharedPreferences.setString(_privacypolicy, privacyPolicy);
+
+  static String? getprivacypolicy() =>
+      _sharedPreferences.getString(_privacypolicy);
+
+  static void settermsdata(String termsdata) =>
+      _sharedPreferences.setString(_termsdata, termsdata);
+
+  static String? gettermsdata() => _sharedPreferences.getString(_termsdata);
+
+  static void setcmssingletitle(String cmssingletitle) =>
+      _sharedPreferences.setString(_cmssingletitle, cmssingletitle);
+
+  static String? getcmssingletitle() =>
+      _sharedPreferences.getString(_cmssingletitle);
+
+  static void setcmssingledescri(String cmssingledescri) =>
+      _sharedPreferences.setString(_cmssingledescri, cmssingledescri);
+
+  static String? getsingledescri() =>
+      _sharedPreferences.getString(_cmssingledescri);
+
+  
   static void clearSession() {
     _sharedPreferences.clear();
   }

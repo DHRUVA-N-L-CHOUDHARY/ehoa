@@ -1,4 +1,5 @@
 import 'package:ehoa/app/components/app_bar.dart';
+import 'package:ehoa/app/components/common/app_utils.dart';
 import 'package:ehoa/app/components/headings.dart';
 import 'package:ehoa/app/components/my_icon_button.dart';
 import 'package:ehoa/app/components/sizedbox_util.dart';
@@ -45,62 +46,30 @@ class RemaindersView extends StatelessWidget {
             ],
           ),
           backgroundColor: Colors.transparent,
-          body: Column(
+          body: baseBody(c.isLoading.value,Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.all(20.0,).h,
+                padding: const EdgeInsets.all(
+                  20.0,
+                ).h,
                 child: headingText(Strings.cyclenotif, fontSize: 24.sp),
               ),
-              MyListTile(
-                showTopBorder: true,
-                keyName: Strings.day1to3,
-                onTap: () {
-                  Get.toNamed(AppPages.REMAINDERS_SET,arguments:{"data": Strings.day1to3});
-                },
-                valueName: "10am",
-              ),
-              MyListTile(
-                keyName: Strings.day4to6,
-                onTap: () {
-                  Get.toNamed(AppPages.REMAINDERS_SET,arguments:{"data": Strings.day4to6});
-                },
-                valueName: "10am",
-              ),
-              MyListTile(
-                keyName: Strings.day7to12,
-                onTap: () {
-                  Get.toNamed(AppPages.REMAINDERS_SET,arguments:{"data": Strings.day7to12});
-                },
-                valueName: "10am",
-              ),
-              MyListTile(
-                keyName: Strings.day13to16,
-                onTap: () {
-                  Get.toNamed(AppPages.REMAINDERS_SET,arguments:{"data": Strings.day13to16});
-                },
-                valueName: "10am",
-              ),
-              MyListTile(
-                keyName: Strings.day17to23,
-                onTap: () {
-                  Get.toNamed(AppPages.REMAINDERS_SET,arguments:{"data": Strings.day17to23});
-                },
-                valueName: "10am",
-              ),
-              MyListTile(
-                keyName: Strings.day24to28or35,
-                onTap: () {
-                  Get.toNamed(AppPages.REMAINDERS_SET,arguments:{"data": Strings.day24to28or35});
-                },
-                valueName: "10am",
-              ),
-              MyListTile(
-                keyName: Strings.cstmsg,
-                onTap: () {
-                  Get.toNamed(AppPages.REMAINDERS_SET,arguments:{"data": Strings.cstmsg});
-                },
-                valueName: "10am",
+              Container(
+                height: MediaQuery.of(context).size.height*0.43,
+                child: ListView.builder(
+                    itemCount: c.rem.length,
+                    itemBuilder: ((context, index) {
+                      return MyListTile(
+                        showTopBorder: c.rem[index].r_id == 1 ? true : false ,
+                        keyName: c.maprem(c.rem[index].r_id.toString()),
+                        onTap: () {
+                          Get.toNamed(AppPages.REMAINDERS_SET,
+                              arguments: {"data": c.maprem(c.rem[index].r_id ?? Strings.cstmsg), "status":c.rem[index].status, "time": c.rem[index].scheduled});
+                        },
+                        valueName: "${c.rem[index].scheduled}:00 Hrs",
+                      );
+                    })),
               ),
               sizedBox(height: MediaQuery.of(context).size.height * 0.05),
               Padding(
@@ -111,23 +80,26 @@ class RemaindersView extends StatelessWidget {
                 showTopBorder: true,
                 keyName: Strings.todaytip,
                 onTap: () {
-                  Get.toNamed(AppPages.REMAINDERS_SET);
+                  Get.toNamed(AppPages.BASE);
                 },
               ),
               MyListTile(
                 keyName: Strings.newartcleforu,
                 onTap: () {
-                  Get.toNamed(AppPages.REMAINDERS_SET);
+                  Get.toNamed(AppPages.BASE);
                 },
               ),
               MyListTile(
                 keyName: Strings.newcerfru,
                 onTap: () {
-                  Get.toNamed(AppPages.REMAINDERS_SET,);
+                  Get.toNamed(
+                    AppPages.BASE,
+                  );
                 },
               ),
             ],
           ),
+        ),
         ),
       );
     });

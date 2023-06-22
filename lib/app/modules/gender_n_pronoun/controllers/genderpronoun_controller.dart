@@ -1,10 +1,8 @@
 import 'package:ehoa/app/service/user_onboarding_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../config/translations/strings_enum.dart';
 import '../../../data/local/data_list_model.dart';
-import '../../../data/remote/api_service.dart';
 import '../../../routes/app_pages.dart';
 
 class GenderNPronounController extends GetxController {
@@ -70,7 +68,6 @@ class GenderNPronounController extends GetxController {
     // Map<String, dynamic> res = await ApiService().updateProfile(data);
     isLoading(false);
     update();
-
     // if (res.containsKey("token")) {
       Get.toNamed(AppPages.PURPOSE);
     // }

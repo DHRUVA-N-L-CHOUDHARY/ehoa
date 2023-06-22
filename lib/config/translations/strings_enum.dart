@@ -325,6 +325,9 @@ class Strings {
 
   static const enterNoteHere = "Enter a note here...";
 
+  static const swipeenergy = "Swipe to enter your energy";
+  static const swipeenergydescri = "Swipe on the circle to energy";
+
   static const goBack = "Go Back";
 
   static const miharo = "Mīharo! (amazing!)";
@@ -353,4 +356,5 @@ class Strings {
   static const newartcleforu = "New article for you";
   static const newcerfru = "New Ceremony for you";
   static const sendnotifat = "Send notification at";
+  static const tenhrs = "10";
 }

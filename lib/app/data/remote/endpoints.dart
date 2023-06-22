@@ -47,4 +47,7 @@ class Endpoints {
   static const showSymptomsBetweenDates = "show-symptoms-between-dates";
   static const saveenergy = "save-energy";
   static const saveurdetails = "save-details";
+  static const saveremin  = "save-reminders";
+  static const savests = "save-status";
+  static const getrem = "show-reminders";
 }
