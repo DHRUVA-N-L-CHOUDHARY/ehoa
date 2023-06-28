@@ -50,4 +50,7 @@ class Endpoints {
   static const saveremin  = "save-reminders";
   static const savests = "save-status";
   static const getrem = "show-reminders";
+  static const deleteaccount = "delete-user";
+  static const updateperoidday = "update-period_day";
+  static const getcycles = "get-cycles/";
 }

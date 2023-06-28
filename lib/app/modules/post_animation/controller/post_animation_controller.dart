@@ -137,7 +137,7 @@ class PostAnimationController extends GetxController {
     isLoading(false);
     update();
 
-    Get.toNamed(AppPages.VIEW_PAGER);
+    Get.offAllNamed(AppPages.VIEW_PAGER);
     ViewPagerView.showSheet();
     // c.update();
   }

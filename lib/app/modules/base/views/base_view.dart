@@ -39,27 +39,8 @@ class BaseView extends StatelessWidget {
                   : true,
               extendBody: true,
               backgroundColor: Colors.transparent,
-              body: c.ispo != "1"
-                  ? c.selectedIndex == BottomBarSelection.symptoms
-                      ? UnlockPremium(
-                          close: () {
-                            c.changePage(BottomBarSelection.calendar);
-                          },
-                          descri: c.txts[0][1],
-                          heading: c.txts[0][0])
-                      : c.selectedIndex == BottomBarSelection.empower
-                          ? UnlockPremium(
-                              close: () {
-                                c.changePage(BottomBarSelection.calendar);
-                              },
-                              descri: c.txts[1][1],
-                              heading: c.txts[1][0])
-                          : Navigator(
-                              key: Get.nestedKey(1),
-                              initialRoute: AppPages.CALENDAR, //profileRoute,
-                              onGenerateRoute: c.onGenerateRoute,
-                            )
-                  : Navigator(
+              body:
+                  Navigator(
                       key: Get.nestedKey(1),
                       initialRoute: AppPages.CALENDAR, //profileRoute,
                       onGenerateRoute: c.onGenerateRoute,
@@ -67,7 +48,7 @@ class BaseView extends StatelessWidget {
               bottomNavigationBar: (c.ispo != "1" &&
                       (c.selectedIndex == BottomBarSelection.symptoms ||
                           c.selectedIndex == BottomBarSelection.empower))
-                  ? Container()
+                  ? Container(height:0)
                   : const BottomNavbar()));
     });
   }

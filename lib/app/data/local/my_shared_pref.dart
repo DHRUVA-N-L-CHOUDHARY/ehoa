@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
+import 'package:ehoa/utils/asset_list.dart';
+import 'package:ehoa/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -40,15 +42,9 @@ class MySharedPref {
   static const String _cmssingletitle = "cmssingletitle";
   static const String _cmssingledescri = "cmssingledescri";
   static const String _remlst = "remlist";
-  static const List<List<String>> _remlist = [
-    [""],
-    [""],
-    [""],
-    [""],
-    [""],
-    [""],
-    [""]
-  ];
+  static const String _animasset = "";
+  static const String _animenergy = "";
+  static const String _animenergydescri = "";
 
   /// init get storage services
   static Future<void> init() async {
@@ -197,7 +193,22 @@ class MySharedPref {
   static String? getsingledescri() =>
       _sharedPreferences.getString(_cmssingledescri);
 
-  
+  static void setanimasset(String animasset) =>
+      _sharedPreferences.setString(_animasset, animasset);
+
+  static String? getanimasset() => _sharedPreferences.getString(_animasset);
+
+  static void setanimenergy(String animenergy) =>
+      _sharedPreferences.setString(_animenergy, animenergy);
+
+  static String? getanimenergy() => _sharedPreferences.getString(_animenergy);
+
+  static void setanimenergydescri(String animenergydescri) =>
+      _sharedPreferences.setString(animenergydescri, _animenergydescri);
+
+  static String? getanimenergydescri() =>
+      _sharedPreferences.getString(_animenergydescri);
+
   static void clearSession() {
     _sharedPreferences.clear();
   }

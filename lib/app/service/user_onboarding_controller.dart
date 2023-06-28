@@ -82,6 +82,7 @@ class UserOnboardingController extends GetxController {
       'average_cycle_length': user?.average_cycle_length.toString(),
       'average_cycle_days': user?.average_cycle_days.toString(),
       'language_id': user?.language_id.toString(),
+      'period_day':"2024-07-12",
       'user_notification_status': user?.user_notification_status.toString()
     };
     try {

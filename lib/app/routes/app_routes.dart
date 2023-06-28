@@ -56,6 +56,7 @@ abstract class Routes {
   static const POST_ANIMATION = _Paths.POST_ANIMATION;
   static const EMPOWER = _Paths.EMPOWER;
   static const CALENDAR = _Paths.CALENDAR;
+  static const ADD_PERIOD_CALENDER = _Paths.ADD_PERIOD_CALENDER;
   static const SYMPTOMS = _Paths.SYMPTOMS;
   static const TIPS = _Paths.TIPS;
   static const SHOP = _Paths.SHOP;
@@ -144,6 +145,7 @@ abstract class _Paths {
   static const PERIOD = "/period";
   static const LANG = "/lang";
   static const NOTIFICATON = "/notification";
+  static const ADD_PERIOD_CALENDER = "/add_period_calender";
   static const WELCOME = "/welcome";
   static const PAYWALL = '/paywall';
   static const CHOOSE_PLAN = '/choose_plan';

@@ -52,56 +52,50 @@ class UnlockPremium extends StatelessWidget {
                   topLeft: Radius.circular(20.w),
                   topRight: Radius.circular(20.w)),
             ),
-            child: Column(
-              children: [
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.end,
-                //   children: [
-                //     GestureDetector(
-                //       onTap: close,
-                //       child: Icon(Icons.close, color: Colors.black, size: MediaQuery.of(context).size.height*0.050,))
-                //   ],
-                // ),
-                sizedBox(height:  MediaQuery.of(AppService.getContext()).size.height *
-                        0.03),
-                headingText(heading,
-                    color: Colors.black,
-                    fontSize: 28 *
-                        MediaQuery.of(AppService.getContext()).size.height *
-                        0.0015),
-                sizedBox(
-                    height: MediaQuery.of(AppService.getContext()).size.height *
-                        0.01),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0) *
-                      MediaQuery.of(AppService.getContext()).size.height *
-                      0.003,
-                  child: discriptionText(descri,
+            child: Center(
+              child: Column(
+                children: [
+                  sizedBox(height:  MediaQuery.of(AppService.getContext()).size.height *
+                          0.03),
+                  headingText(heading,
                       color: Colors.black,
-                      fontSize: 20* MediaQuery.of(AppService.getContext()).size.height *
-                        0.0015,
-                      textAlign: TextAlign.center),
-                ),
-                sizedBox(height: MediaQuery.of(context).size.height * 0.75),
-                GestureDetector(
-                  onTap: () {
-                    Get.toNamed(AppPages.PAYWALL);
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    decoration: BoxDecoration(
-                        color: Color.fromRGBO(246, 78, 65, 1.0),
-                        borderRadius: BorderRadius.all(Radius.circular(10.w))),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0).w,
-                      child: Center(
-                          child: subHeadingText("Unlock Premium",
-                              fontSize: 24* MediaQuery.of(AppService.getContext()).size.height *
-                        0.0015)),
-                    ),
+                      fontSize: 28 *
+                          MediaQuery.of(AppService.getContext()).size.height *
+                          0.0015),
+                  sizedBox(
+                      height: MediaQuery.of(AppService.getContext()).size.height *
+                          0.01),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0) *
+                        MediaQuery.of(AppService.getContext()).size.height *
+                        0.003,
+                    child: discriptionText(descri,
+                        color: Colors.black,
+                        fontSize: 20* MediaQuery.of(AppService.getContext()).size.height *
+                          0.0015,
+                        textAlign: TextAlign.center),
                   ),
-                )
-              ],
+                  sizedBox(height: MediaQuery.of(context).size.height * 0.75),
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed(AppPages.PAYWALL);
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(246, 78, 65, 1.0),
+                          borderRadius: BorderRadius.all(Radius.circular(10.w))),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0).w,
+                        child: Center(
+                            child: subHeadingText("Unlock Premium",
+                                fontSize: 24* MediaQuery.of(AppService.getContext()).size.height *
+                          0.0015)),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
           Row(

@@ -326,4 +326,22 @@ class ApiService extends ApiInterface {
     return _parseBaseResponse(res) ?? {};
   }
 
+  Future<Map<String,dynamic>> deleteaccount(Map<String, dynamic> data) async {
+    http.Response res = await postApi(
+        url: ApiInterface.baseUrl + Endpoints.deleteaccount,data: data);
+    return _parseBaseResponse(res) ?? {};
+  }
+
+  Future<Map<String,dynamic>> Updateperoiddate(Map<String, dynamic> data) async {
+    http.Response res = await postApi(
+        url: ApiInterface.baseUrl + Endpoints.updateperoidday,data: data);
+    return _parseBaseResponse(res) ?? {};
+  }
+
+  Future<Map<String,dynamic>> getCycleDetails(uid) async {
+    http.Response res = await getApi(
+        url: ApiInterface.baseUrl + Endpoints.getcycles+uid);
+    return _parseBaseResponse(res) ?? {};
+  }
+
 }

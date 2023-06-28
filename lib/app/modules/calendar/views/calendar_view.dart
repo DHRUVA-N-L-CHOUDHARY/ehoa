@@ -71,7 +71,7 @@ class CalendarView extends StatelessWidget {
                                 top: MediaQuery.of(AppService.getContext())
                                         .size
                                         .height *
-                                    0.23,
+                                    0.27,
                                 child: Image.asset(
                                   AppImages.bkgellipse,
                                   width: MediaQuery.of(AppService.getContext())
@@ -85,7 +85,7 @@ class CalendarView extends StatelessWidget {
                                 top: MediaQuery.of(AppService.getContext())
                                         .size
                                         .height *
-                                    0.37,
+                                    0.35,
                                 child: Image.asset(
                                   AppImages.bkgmoons,
                                   width: MediaQuery.of(AppService.getContext())

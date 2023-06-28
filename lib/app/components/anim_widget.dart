@@ -2,6 +2,7 @@ import 'package:ehoa/app/components/headings.dart';
 import 'package:ehoa/app/components/sizedbox_util.dart';
 import 'package:ehoa/app/modules/zoom_animation/controllers/zoom_animation_controller.dart';
 import 'package:ehoa/app/routes/app_pages.dart';
+import 'package:ehoa/app/service/helper/dialog_helper.dart';
 import 'package:ehoa/config/translations/strings_enum.dart';
 import 'package:ehoa/utils/asset_list.dart';
 import 'package:ehoa/utils/constants.dart';
@@ -63,9 +64,15 @@ class _AnimWidgetState extends State<AnimWidget> {
     return GetBuilder<ZoomAnimationController>(builder: (c) {
       return GestureDetector(
         onDoubleTap: () {
+           if(assetcurt[0]!= AppImages.animinit)
+          {
           c.updateanim(energy, energydescri, assetcurt);
           print("disfhdflkdshfsd");
           Get.offNamed(AppPages.ZOOM_ANIMATION);
+          }
+          else{
+            DialogHelper.showErrorDialog("Enter Energy", "Swipe in clockwise over circle");
+          }
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

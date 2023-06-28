@@ -101,6 +101,9 @@ class SettingsView extends StatelessWidget {
                 keyName: Strings.deleteAcc,
                 keyIcon: AppIcons.kDelte,
                 showBottomBorder: false,
+                onTap: (){
+                  c.deletuser();
+                },
               ),
               sizedBox(height: 16)
             ],

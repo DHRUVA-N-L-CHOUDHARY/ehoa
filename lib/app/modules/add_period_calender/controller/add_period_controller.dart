@@ -1,27 +1,31 @@
-import 'package:ehoa/app/data/local/my_shared_pref.dart';
-import 'package:ehoa/app/modules/add_period_calender/controller/add_period_controller.dart';
-import 'package:ehoa/app/modules/calendar/controllers/calendar_controller.dart';
-import 'package:ehoa/app/service/helper/dialog_helper.dart';
-import 'package:ehoa/utils/constants.dart';
-import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-
-import '../../../data/remote/api_service.dart';
-import '../../../service/base_controller.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:math' as m;
 
-class PeriodCalendarController extends GetxController with BaseController {
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'package:ehoa/app/data/local/my_shared_pref.dart';
+import 'package:ehoa/app/data/remote/api_service.dart';
+import 'package:ehoa/app/modules/calendar/controllers/calendar_controller.dart';
+import 'package:ehoa/app/routes/app_pages.dart';
+import 'package:ehoa/app/service/helper/dialog_helper.dart';
+import 'package:ehoa/utils/constants.dart';
+import 'package:intl/intl.dart';
+
+import '../../../service/base_controller.dart';
+
+class AddPeriodCalendarController extends GetxController with BaseController {
   final calC = Get.put(CalendarController());
   bool? isLoggingPeriod = false;
   DateTime? selectedDateTime = DateTime.now();
   DateTime? rangeStartDay;
   DateTime? rangeEndDay;
-  List<CycleDetails> cycledetasils1 = List.empty(growable: true);
+  List<CycleDetails> cycledetasils = List.empty(growable: true);
 
   @override
-  void onInit() {
-    getcycles();
+  void onInit() async{
+   await getcycles();
     super.onInit();
   }
 
@@ -50,6 +54,45 @@ class PeriodCalendarController extends GetxController with BaseController {
       return "November";
     } else {
       return "December";
+    }
+  }
+
+  Future getcycles() async {
+    Map<String, dynamic> res;
+    try {
+      res = await ApiService()
+          .getCycleDetails(MySharedPref.getUserId().toString());
+      // print(res);
+      res["cycles"].forEach((element) {
+        cycledetasils.add(CycleDetails(
+            startdate: element["cycle_start_date"],
+            enddate: element["cycle_end_date"],
+            month: element["month"]));
+      });
+      // res.forEach((key, value) {
+      // // cycledetasils.add(CycleDetails());
+      print(cycledetasils[0].startdate);
+      // });
+      update();
+    } catch (e) {
+      DialogHelper.showErrorDialog(
+          "Server Error", "Please Check your Input & Internet Connectivity");
+   
+    }
+  }
+
+  Future updatecycledates(String peroid_day) async {
+    Map<String, dynamic> res;
+    try {
+      Map<String, dynamic> data = {"user_id": MySharedPref.getUserId().toString(), "period_day": peroid_day};
+      // if(DateTime.now().difference())
+      res = await ApiService().Updateperoiddate(data);
+      if (res.isNotEmpty) {
+        Get.back();
+      }
+    } catch (e) {
+      DialogHelper.showErrorDialog(
+          "Server Error", "Please Check your Input & Internet Connectivity");
     }
   }
 
@@ -239,58 +282,28 @@ class PeriodCalendarController extends GetxController with BaseController {
     // }
   }
 
-  Future getcycles() async {
-    Map<String, dynamic> res;
-    try {
-      res = await ApiService().getCycleDetails(MySharedPref.getUserId().toString());
-      // print(res);
-      res["cycles"].forEach((element) {
-        cycledetasils1.add(CycleDetails(
-            startdate: element["cycle_start_date"],
-            enddate: element["cycle_end_date"],
-            month: element["month"]));
-      });
-      // res.forEach((key, value) {
-      // // cycledetasils.add(CycleDetails());
-      print(cycledetasils1[0].startdate);
-      // });
-      update();
-    } catch (e) {
-      DialogHelper.showErrorDialog(
-          "Server Error", "Please Check your Input & Internet Connectivity");
-    }
-  }
-
   // getSelected(DateTime day) {
   //   try {
-  //     int idx = calC.moonList1.indexWhere((element) {
-  //       return element.date!.day == day.day && element.date!.month == day.month;
+  //     int idx = cycledetasils.indexWhere((element) {
+  //       // print(element.startdate);
+  //       print( DateFormat("yyyy-MM-dd").format(day).toString());
+  //       return element.startdate ==
+  //           DateFormat("yyyy-MM-dd").format(day).toString();
   //     });
-  //     int idx1 = calC.moonList2.indexWhere((element) {
-  //       return element.date!.day == day.day && element.date!.month == day.month;
-  //     });
-  //     int idx2 = calC.moonList3.indexWhere((element) {
-  //       return element.date!.day == day.day && element.date!.month == day.month;
-  //     });
-  //     if (idx != -1 || idx1 != -1 || idx2 != -1) {
-  //       if(idx != -1)
-  //       return calC.moonList1[idx].isSelected;
-  //       else if(idx1 != -1)
-  //       return calC.moonList2[idx1].isSelected;
-  //       else
-  //       return calC.moonList3[idx2].isSelected;
+  //     // update();
+  //     print(idx);
+  //     if (idx != -1) {
+  //       return true;
   //     } else {
   //       return false;
   //     }
   //   } catch (e) {
   //     debugPrint("Exception in getSelected Unable to find selection");
   //   }
-    
   // }
-
-   getSelected(DateTime day) {
+  getSelected(DateTime day) {
       try {
-        int idx = cycledetasils1.indexWhere((element) {
+        int idx = cycledetasils.indexWhere((element) {
           final rx = (DateFormat("yyyy-MM-dd").parse(element.startdate.toString())).difference(day).inDays;
           print(rx);
           return ((element.startdate ==
@@ -310,7 +323,13 @@ class PeriodCalendarController extends GetxController with BaseController {
 
   getIsToday(DateTime day) {
     return DateTime.now().day == day.day && DateTime.now().month == day.month;
-  } 
+  }
+
+  RxBool peroidselected = false.obs;
+  selectperoidstart() {
+    peroidselected.toggle();
+    update();
+  }
 }
 
 class Month {
@@ -326,4 +345,15 @@ class Month {
   static const october = 10;
   static const november = 11;
   static const december = 12;
+}
+
+class CycleDetails {
+  String? startdate;
+  String? enddate;
+  String? month;
+  CycleDetails({
+    this.startdate,
+    this.enddate,
+    this.month,
+  });
 }

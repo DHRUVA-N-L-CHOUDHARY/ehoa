@@ -1,5 +1,7 @@
 import 'package:ehoa/app/components/headings.dart';
 import 'package:ehoa/app/components/sizedbox_util.dart';
+import 'package:ehoa/app/modules/add_period_calender/controller/add_period_controller.dart';
+import 'package:ehoa/app/service/helper/dialog_helper.dart';
 import 'package:ehoa/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,19 +12,17 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../../config/theme/light_theme_colors.dart';
 import '../../../../config/theme/my_styles.dart';
-import '../../../../config/translations/strings_enum.dart';
 import '../../../components/app_bar.dart';
 import '../../../components/app_outlined_btn.dart';
 import '../../../components/my_icon_button.dart';
 import '../../../routes/app_pages.dart';
-import '../controllers/period_calendar_controller.dart';
 
-class PeriodCalendarView extends StatelessWidget {
-  const PeriodCalendarView({Key? key}) : super(key: key);
+class AddPeriodCalendarView extends StatelessWidget {
+  const AddPeriodCalendarView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PeriodCalendarController>(builder: (c) {
+    return GetBuilder<AddPeriodCalendarController>(builder: (c) {
       return Container(
           decoration: BoxDecoration(
               image: DecorationImage(
@@ -37,17 +37,39 @@ class PeriodCalendarView extends StatelessWidget {
                 child: MyAppBar(
                   color: 0x00000000,
                   leading: [
-                    MyIconButton(
-                        onTap: () {
-                          Get.back();
-                        },
-                        isSvg: true,
-                        icon: AppIcons.kBackArrowIcon)
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        headingText(DateFormat("MMMM").format(DateTime.now()),
+                            fontSize: 30),
+                        subHeadingText(DateFormat("dd").format(DateTime.now()),
+                            fontSize: 15),
+                      ],
+                    ),
                   ],
-                  middle: [
-                    headingText(DateFormat("MMMM")
-                            .format(DateTime.now()) //'June "Hune"',
-                        )
+                  actions: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 8.0).w,
+                          child: SvgPicture.asset(
+                            AppIcons.kBackArrowIcon,
+                            width: 16.w,
+                            height: 16.h,
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 8.0).w,
+                          child: SvgPicture.asset(
+                            AppIcons.kRightArrowIcon,
+                            width: 16.w,
+                            height: 16.h,
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 )),
             body: SingleChildScrollView(
@@ -64,7 +86,7 @@ class PeriodCalendarView extends StatelessWidget {
                   firstDay: DateTime(2023),
                   focusedDay: c.selectedDateTime!,
                   lastDay: DateTime(2100),
-                  headerVisible: true,
+                  headerVisible: false,
                   rangeEndDay: c.rangeEndDay,
                   rangeStartDay: c.rangeStartDay,
                   onRangeSelected: (start, end, focusedDay) {
@@ -75,12 +97,13 @@ class PeriodCalendarView extends StatelessWidget {
                   calendarBuilders: CalendarBuilders(
                     headerTitleBuilder: (context, day) {
                       return Container(
-                          color: Colors.transparent,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [subHeadingText(c.parseMonth(day.month))],
-                          ));
+                          // color: Colors.transparent,
+                          // child: Row(
+                          //   mainAxisSize: MainAxisSize.max,
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [subHeadingText(c.parseMonth(day.month))],
+                          // )
+                          );
                     },
                     dowBuilder: (context, day) {
                       return Center(
@@ -99,7 +122,7 @@ class PeriodCalendarView extends StatelessWidget {
                       return CalendarCell(
                         day: day,
                         c: c,
-                        isSelected: true,
+                        isSelected: c.peroidselected.value,
                         isToday: c.getIsToday(day),
                       );
                     },
@@ -121,7 +144,6 @@ class PeriodCalendarView extends StatelessWidget {
                         isSelected: false,
                       );
                     },
-
                     //Range
                     rangeStartBuilder: (context, day, focusedDay) {
                       return CalendarCell(
@@ -148,30 +170,15 @@ class PeriodCalendarView extends StatelessWidget {
                       return Container();
                     },
                   ),
-                  headerStyle: HeaderStyle(
-                    formatButtonVisible: false,
-                    leftChevronIcon: SvgPicture.asset(
-                      AppIcons.kBackArrowIcon,
-                      width: 16.w,
-                      height: 16.h,
-                    ),
-                    rightChevronIcon: SvgPicture.asset(
-                      AppIcons.kRightArrowIcon,
-                      width: 16.w,
-                      height: 16.h,
-                    ),
-                  ),
                   currentDay: DateTime.now(),
                   calendarFormat: CalendarFormat.month,
                   selectedDayPredicate: (day) {
                     return isSameDay(c.selectedDateTime, day);
                   },
                   onDaySelected: (selectedDay, focusedDay) async {
-                    debugPrint("selectedDay $selectedDay");
-                    //c.selectedDateTime = selectedDay;
-                    // c.update();
-                    if (!c.isLoggingPeriod!) {
-                      Get.toNamed(AppPages.CALENDAR_LIST_VIEW);
+                    if (c.getIsToday(selectedDay)) {
+                      c.selectperoidstart();
+                      print(c.peroidselected.value);
                     }
                   },
                 ),
@@ -199,10 +206,17 @@ class PeriodCalendarView extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: AppOutlineButton(
-                            btnText: "Edit period dates",
+                            btnText: "Save",
                             fontSize: 10,
                             ontap: () {
-                              Get.toNamed(AppPages.ADD_PERIOD_CALENDER);
+                              if (c.peroidselected.value == true) {
+                                c.updatecycledates(DateFormat("dd-MM-yyyy")
+                                    .format(DateTime.now()));
+                              }
+                              else
+                              {
+                                DialogHelper.showErrorDialog("Select Cycle Dates", "Select Cycle or Peroid Start date to save");
+                              }
                             }),
                       )
                     ],
@@ -227,7 +241,7 @@ class CalendarCell extends StatelessWidget {
   final bool? isSelected;
   final bool? isToday;
   final DateTime day;
-  final PeriodCalendarController c;
+  final AddPeriodCalendarController c;
 
   @override
   Widget build(BuildContext context) {

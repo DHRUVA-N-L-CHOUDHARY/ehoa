@@ -1,5 +1,7 @@
 import 'package:ehoa/app/modules/about_us/bindings/about_us_binding.dart';
 import 'package:ehoa/app/modules/about_us/views/about_us_view.dart';
+import 'package:ehoa/app/modules/add_period_calender/binding/add_period_calendar_binding.dart';
+import 'package:ehoa/app/modules/add_period_calender/view/add_period_calendar_view.dart';
 import 'package:ehoa/app/modules/age/bindings/age_binding.dart';
 import 'package:ehoa/app/modules/choose_plan/bindings/choose_plan_binding.dart';
 import 'package:ehoa/app/modules/choose_plan/views/choose_plan_view.dart';
@@ -157,6 +159,7 @@ class AppPages {
   static const CYCLE_LEN = Routes.CYCLE_LEN;
   static const PERIOD = Routes.PERIOD;
   static const LANG = Routes.LANG;
+  static const ADD_PERIOD_CALENDER = Routes.ADD_PERIOD_CALENDER;
   static const NOTIFICATON = Routes.NOTIFICATON;
   static const WELCOME = Routes.WELCOME;
   static const PAYWALL = Routes.PAYWALL;
@@ -523,6 +526,10 @@ class AppPages {
     GetPage(
         name: _Paths.POST_ANIMATION,
         page: () => const PostAnimationView(),
-        binding: PostAnimationBinding())
+        binding: PostAnimationBinding()),
+     GetPage(
+        name: _Paths.ADD_PERIOD_CALENDER,
+        page: () => const AddPeriodCalendarView(),
+        binding: AddPeriodCalendarBinding())
   ];
 }
